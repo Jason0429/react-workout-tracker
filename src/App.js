@@ -1,22 +1,52 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import React from "react";
+import styled from "styled-components";
+import Navbar from "./components/Navbar";
+import Login from "./components/Login";
 
-const firebaseConfig = {
-	apiKey: process.env.REACT_APP_API_KEY,
-	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-	projectId: process.env.REACT_APP_PROJECT_ID,
-	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-	messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
-	appId: process.env.REACT_APP_APP_ID,
-	measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+/*
+Add button (bottom right)
+    - Add workout for current month/day/year
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+List of Workout Templates
+    - Exercise
+    - Weight
+    - Reps (repeated # rows (sets))
+
+Calendar 
+    - linked to database based on month/day/year
+
+Search for specific date
+    - View workout(s) on that date
+*/
 
 function App() {
-	return <div className='App'>Hello</div>;
+	const user = null;
+
+	const Main = styled.div`
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	`;
+
+	return (
+		<>
+			{!user ? (
+				<>
+					<Main>
+						<Login />
+					</Main>
+					<Navbar />
+				</>
+			) : (
+				<>
+					<Main>Hello</Main>
+					<Navbar />
+				</>
+			)}
+		</>
+	);
 }
 
 export default App;
