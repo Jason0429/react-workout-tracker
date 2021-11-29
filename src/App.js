@@ -1,7 +1,10 @@
-import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./components/Navbar";
-import Login from "./components/Login";
+import LoginScreen from "./screens/LoginScreen";
+import CalendarScreen from "./screens/CalendarScreen";
+import AddScreen from "./screens/AddScreen";
+import TemplateScreen from "./screens/TemplateScreen";
 
 /*
 Add button (bottom right)
@@ -31,21 +34,25 @@ function App() {
 	`;
 
 	return (
-		<>
-			{!user ? (
-				<>
-					<Main>
-						<Login />
-					</Main>
-					<Navbar />
-				</>
-			) : (
-				<>
-					<Main>Hello</Main>
-					<Navbar />
-				</>
-			)}
-		</>
+		<Router>
+			<Main>
+				<Routes>
+					<Route exact path='/' element={<LoginScreen />} />
+					<Route
+						exact
+						path='/calendar'
+						element={<CalendarScreen />}
+					/>
+					<Route exact path='/add' element={<AddScreen />} />
+					<Route
+						exact
+						path='/template'
+						element={<TemplateScreen />}
+					/>
+				</Routes>
+			</Main>
+			<Navbar />
+		</Router>
 	);
 }
 

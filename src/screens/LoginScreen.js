@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Screen } from "../styled";
 import { Button } from "@material-ui/core";
 
-function Login() {
+function LoginScreen() {
 	return (
 		<Screen
 			style={{
@@ -25,4 +25,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default LoginScreen;

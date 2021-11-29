@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { makeStyl } from "styled-components";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AddIcon from "@mui/icons-material/Add";
+import { NavLink } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 // import { signInWithGoogle, signOutOfGoogle } from "../actions";
 
@@ -23,24 +24,60 @@ function Navbar() {
 		box-shadow: 0 0 15px 3px #00000020;
 	`;
 
-	const CircularShadowEffect = styled.div`
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 30px;
-		width: 30px;
-		box-shadow: 0 0 15px 3px #00000020;
-		border-radius: 100%;
-		background: #fefefe;
-	`;
+	const nonActiveStyle = {
+		textDecoration: "none",
+		color: "inherit",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		height: "40px",
+		width: "40px",
+		borderRadius: "100%"
+	};
+
+	const activeStyle = {
+		textDecoration: "none",
+		color: "inherit",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		height: "40px",
+		width: "40px",
+		borderRadius: "100%",
+		boxShadow: "0 0 15px 3px #00000020"
+	};
+
+	const iconStyle = {
+		height: "20px",
+		width: "20px"
+	};
 
 	return (
 		<Nav>
-			<CalendarTodayIcon />
-			<CircularShadowEffect>
-				<AddIcon />
-			</CircularShadowEffect>
-			<FitnessCenterIcon />
+			<NavLink
+				to='/calendar'
+				style={({ isActive }) =>
+					isActive ? activeStyle : nonActiveStyle
+				}
+			>
+				<CalendarTodayIcon style={iconStyle} />
+			</NavLink>
+			<NavLink
+				to='/add'
+				style={({ isActive }) =>
+					isActive ? activeStyle : nonActiveStyle
+				}
+			>
+				<AddIcon style={iconStyle} />
+			</NavLink>
+			<NavLink
+				to='/template'
+				style={({ isActive }) =>
+					isActive ? activeStyle : nonActiveStyle
+				}
+			>
+				<FitnessCenterIcon style={iconStyle} />
+			</NavLink>
 		</Nav>
 	);
 }
