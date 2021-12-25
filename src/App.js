@@ -1,10 +1,22 @@
+// React
+import { useState, useEffect } from "react";
+
+// Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
+
+// Styled Components
+import { Main } from "./styled";
+
+// Other components
 import Navbar from "./components/Navbar";
-import LoginScreen from "./screens/LoginScreen";
-import CalendarScreen from "./screens/CalendarScreen";
-import AddScreen from "./screens/AddScreen";
-import TemplateScreen from "./screens/TemplateScreen";
+
+// Pages
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import StartPage from "./pages/StartPage";
+import ProgressPage from "./pages/ProgressPage";
+import TemplatePage from "./pages/TemplatePage";
+import ErrorPage from "./pages/ErrorPage";
 
 /*
 Add button (bottom right)
@@ -23,35 +35,74 @@ Search for specific date
 */
 
 function App() {
-	const user = null;
+	const [user, setUser] = useState(true);
 
-	const Main = styled.div`
-		width: 100%;
-		height: 100vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	`;
+	useEffect(() => {
+		window.scrollTo(0, 0);
+
+		/*
+        db.collection("connectionName").onSnapshot(snapshot => {
+
+        });
+
+        db.collection("connectionName").add({
+
+        });
+        */
+	}, []);
 
 	return (
 		<Router>
 			<Main>
-				<Routes>
-					<Route exact path='/' element={<LoginScreen />} />
-					<Route
-						exact
-						path='/calendar'
-						element={<CalendarScreen />}
-					/>
-					<Route exact path='/add' element={<AddScreen />} />
-					<Route
-						exact
-						path='/template'
-						element={<TemplateScreen />}
-					/>
-				</Routes>
+				{user ? (
+					<>
+						<Routes>
+							<Route
+								path='/template'
+								exact
+								element={
+									<>
+										<Navbar />
+										<TemplatePage />
+									</>
+								}
+							/>
+							<Route
+								path='/progress'
+								exact
+								element={
+									<>
+										<Navbar />
+										<ProgressPage />
+									</>
+								}
+							/>
+							<Route
+								path='/start'
+								exact
+								element={
+									<>
+										<Navbar />
+										<StartPage />
+									</>
+								}
+							/>
+							<Route
+								path='/'
+								element={
+									<>
+										<Navbar />
+										<HomePage />
+									</>
+								}
+							/>
+							<Route path='*' element={<ErrorPage />} />
+						</Routes>
+					</>
+				) : (
+					<LoginPage />
+				)}
 			</Main>
-			<Navbar />
 		</Router>
 	);
 }

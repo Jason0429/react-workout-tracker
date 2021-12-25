@@ -1,26 +1,21 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import allReducers from "./reducers";
 
-// STORE -> GLOBALIZED STORE
-const store = createStore(
-	allReducers,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+// Redux
+// import { Provider } from "react-redux";
+// import { store } from "./store/store";
 
-// ACTION
+// import { applyMiddleware, createStore, compose } from "redux";
 
-// REDUCERS
-
-// DISPATCH
+// import thunk from "redux-thunk";
+// import { reduxFirestore, getFirestore } from "redux-firestore";
+// import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+// import config from "./config/firebaseConfig";
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
+	// <Provider store={store}>
+	<App />,
+	// </Provider>,
 	document.getElementById("root")
 );
