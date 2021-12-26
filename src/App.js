@@ -54,6 +54,7 @@ function App() {
 	return (
 		<Router>
 			<Main>
+				<Navbar />
 				{user ? (
 					<>
 						<Routes>
@@ -62,7 +63,6 @@ function App() {
 								exact
 								element={
 									<>
-										<Navbar />
 										<TemplatePage />
 									</>
 								}
@@ -72,7 +72,6 @@ function App() {
 								exact
 								element={
 									<>
-										<Navbar />
 										<ProgressPage />
 									</>
 								}
@@ -82,7 +81,6 @@ function App() {
 								exact
 								element={
 									<>
-										<Navbar />
 										<StartPage />
 									</>
 								}
@@ -91,7 +89,6 @@ function App() {
 								path='/'
 								element={
 									<>
-										<Navbar />
 										<HomePage />
 									</>
 								}

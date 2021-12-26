@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { TextField, Stack } from "@mui/material";
 import ExercisesDialog from "../components/Template/ExercisesDialog";
+import ExerciseTemplate from "../components/Template/ExerciseTemplate";
+import { Set } from "../models/Set";
 
 const Container = styled.div`
 	margin-top: 50px;
@@ -71,17 +73,40 @@ function TemplatePage() {
 	};
 
 	const handleClose = (exercise) => {
+		if (exercise !== "")
+			setTemplate((prev) => ({
+				...prev,
+				exercises: [...prev["exercises"], exercise]
+			}));
+
+		setOpen(false);
+	};
+
+	const handleDeleteExercise = (id) => {
 		setTemplate((prev) => ({
 			...prev,
-			exercises: [...prev["exercises"], exercise]
+			exercises: prev["exercises"].filter((e) => e.id !== id)
 		}));
-		setOpen(false);
+	};
+
+	const handleAddSet = (id) => {
+		setTemplate((prev) => ({
+			...prev,
+			exercises: prev["exercises"].map((e) =>
+				e.id === id
+					? {
+							...e,
+							sets: [...e["sets"], new Set()]
+					  }
+					: e
+			)
+		}));
 	};
 
 	return (
 		<Container>
 			<Header variant='h5'>Create a Workout Template</Header>
-			<MyStack direction='column' spacing={3}>
+			<MyStack direction='column' spacing={3} alignItems='center'>
 				{/* Variants: outlined, standard, filled */}
 				<TextField
 					label='Workout Name'
@@ -89,6 +114,16 @@ function TemplatePage() {
 					onChange={handleName}
 				/>
 				{/* Render all exercises here */}
+				<Stack direction='column' spacing={2} alignItems='center'>
+					{template.exercises.map((e) => (
+						<ExerciseTemplate
+							exercise={e}
+							handleDeleteExercise={handleDeleteExercise}
+							handleAddSet={handleAddSet}
+						/>
+					))}
+				</Stack>
+
 				<BlueBtn onClick={handleOpen}>+ Add Exercise</BlueBtn>
 				<GreenBtn onClick={null}>Create Template</GreenBtn>
 				<ExercisesDialog
