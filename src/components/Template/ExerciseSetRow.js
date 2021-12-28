@@ -1,18 +1,23 @@
-import styled from "styled-components";
-import { Stack, Input } from "@mui/material";
+// React
+import { useRef } from "react";
 
-function ExerciseSetRow({ setNumber, set }) {
-	const { reps, lbs, rpe } = set;
-	const SetNumber = styled.div`
-		font-weight: bold;
-		font-size: 0.9em;
-		width: 50px;
-		text-align: center;
-	`;
+// Material
+import { Stack } from "@mui/material";
 
-	const MyInput = styled(Input)`
-		width: 50px;
-	`;
+// Styles
+import { SetNumber, MyInput } from "./ExerciseSetRowStyles";
+
+const ExerciseSetRow = ({
+	exerciseId,
+	setNumber,
+	handleReps,
+	handleLbs,
+	handleRpe
+}) => {
+	// const { reps, lbs, rpe } = set;
+	const repsRef = useRef();
+	const lbsRef = useRef();
+	const rpeRef = useRef();
 
 	return (
 		<Stack
@@ -21,11 +26,26 @@ function ExerciseSetRow({ setNumber, set }) {
 			alignItems='center'
 		>
 			<SetNumber>{setNumber}</SetNumber>
-			<MyInput type='number' value={reps} />
-			<MyInput type='number' value={lbs} />
-			<MyInput type='number' value={rpe} />
+			<MyInput
+				type='number'
+				ref={repsRef}
+				onChange={(event) => handleReps(event, exerciseId, setNumber)}
+				// value={reps}
+			/>
+			<MyInput
+				type='number'
+				ref={lbsRef}
+				onChange={(event) => handleLbs(event, exerciseId, setNumber)}
+				// value={lbs}
+			/>
+			<MyInput
+				type='number'
+				ref={rpeRef}
+				onChange={(event) => handleRpe(event, exerciseId, setNumber)}
+				// value={rpe}
+			/>
 		</Stack>
 	);
-}
+};
 
 export default ExerciseSetRow;

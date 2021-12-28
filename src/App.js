@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 // Router
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Styled Components
+// Styles
 import { Main } from "./styled";
 
-// Other components
+// Components
 import Navbar from "./components/Navbar";
 
 // Pages
@@ -18,23 +18,7 @@ import ProgressPage from "./pages/ProgressPage";
 import TemplatePage from "./pages/TemplatePage";
 import ErrorPage from "./pages/ErrorPage";
 
-/*
-Add button (bottom right)
-    - Add workout for current month/day/year
-
-List of Workout Templates
-    - Exercise
-    - Weight
-    - Reps (repeated # rows (sets))
-
-Calendar 
-    - linked to database based on month/day/year
-
-Search for specific date
-    - View workout(s) on that date
-*/
-
-function App() {
+const App = () => {
 	const [user, setUser] = useState(true);
 
 	useEffect(() => {
@@ -102,6 +86,6 @@ function App() {
 			</Main>
 		</Router>
 	);
-}
+};
 
 export default App;
