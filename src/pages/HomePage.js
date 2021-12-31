@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-function HomePage() {
+function HomePage({ user }) {
 	const Container = styled.div`
 		margin-top: 50px;
 		padding: 20px;

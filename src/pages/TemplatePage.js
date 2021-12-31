@@ -9,109 +9,133 @@ import ExercisesDialog from "../components/Template/ExercisesDialog";
 import ExerciseTemplate from "../components/Template/ExerciseTemplate";
 
 // Models
-import { Set } from "../models/Set";
+import { Set } from "../models/Set.model";
+import { Template } from "../models/Template.model";
 
 // Styles
 import {
 	Container,
-	MyStack,
 	Header,
 	BlueBtn,
-	GreenBtn
-} from "../components/Template/TemplatePageStyles";
+	GreenBtn,
+	FullRowFixed
+} from "../components/Template/TemplatePage.styles";
 
-const TemplatePage = () => {
+function TemplatePage({ handleAddTemplate }) {
 	const [template, setTemplate] = useState({
 		name: "",
 		exercises: []
 	});
 
-	useEffect(() => {
-		console.log(template);
-	}, [template]);
-
-	const [open, setOpen] = useState(false);
+	const [openDialog, setOpenDialog] = useState(false);
 
 	/**
 	 * Handles template name.
 	 * @param {Event} e the TextField event.
 	 */
-	const handleName = (e) => {
+	function handleName(e) {
 		setTemplate((prev) => ({
 			...prev,
-			name: e.target.value.trim()
+			name: e.target.value
 		}));
-	};
+	}
 
 	/**
 	 * Handles open dialog.
 	 */
-	const handleOpen = () => {
-		setOpen(true);
-	};
+	function handleOpenDialog() {
+		setOpenDialog(true);
+	}
 
 	/**
 	 * Handles closing dialog and selecting exercise.
 	 * @param {Exercise | ""} exercise the selected exercise.
 	 */
-	const handleClose = (exercise) => {
-		if (exercise !== "")
-			setTemplate((prev) => ({
-				...prev,
-				exercises: [...prev["exercises"], exercise]
-			}));
+	function handleCloseDialog(exercise) {
+		if (exercise !== "") handleAddExercise(exercise);
+		setOpenDialog(false);
+	}
 
-		setOpen(false);
-	};
+	/**
+	 * Handles adding an exercise to array of exercises in template.
+	 * @param {Exercise} exercise
+	 */
+	function handleAddExercise(exercise) {
+		setTemplate((prev) => ({
+			...prev,
+			exercises: [...prev["exercises"], exercise]
+		}));
+	}
 
 	/**
 	 * Handles deleting exercise from template.
-	 * @param {String} exerciseId the exercise id.
+	 * @param {Number} exerciseIdx the index of the exercise template.
 	 */
-	const handleDeleteExercise = (exerciseId) => {
+	function handleDeleteExercise(exerciseIdx) {
 		setTemplate((template) => ({
 			...template,
-			exercises: template["exercises"].filter((e) => e.id !== exerciseId)
+			exercises: template["exercises"].filter(
+				(e, idx) => idx !== exerciseIdx
+			)
 		}));
-	};
+	}
 
 	/**
 	 * Handles adding a set to exercise in template.
-	 * @param {String} exerciseId the exercise id.
+	 * @param {String} exerciseIdx the index of the exercise template.
 	 */
-	const handleAddSet = (exerciseId) => {
+	function handleAddSet(exerciseIdx) {
 		setTemplate((template) => ({
 			...template,
-			exercises: template["exercises"].map((e) =>
-				e.id === exerciseId
+			exercises: template["exercises"].map((e, idx) =>
+				idx === exerciseIdx
 					? {
 							...e,
-							sets: [...e["sets"], new Set()]
+							sets: [...e["sets"], Set()]
 					  }
 					: e
 			)
 		}));
-	};
+	}
 
 	/**
-	 * Handles changing reps in a set.
-	 * @param {Event} event the input event.
-	 * @param {Number} exerciseId the exercise id.
-	 * @param {Number} setNumber the index of the set.
+	 * Handles deleting a set from an exercise in template.
+	 * @param {String} exerciseIdx the index of the exercise template.
+	 * @param {Number} setIdx the index of the set.
 	 */
-	const handleReps = (event, exerciseId, setNumber) => {
-		const newReps = parseInt(event.target.value);
+	function handleDeleteSet(exerciseIdx, setIdx) {
 		setTemplate((template) => ({
 			...template,
-			exercises: template["exercises"].map((e) =>
-				e.id === exerciseId
+			exercises: template["exercises"].map((e, idx) =>
+				idx === exerciseIdx
+					? {
+							...e,
+							sets: e["sets"].filter((set, idx) => idx !== setIdx)
+					  }
+					: e
+			)
+		}));
+	}
+
+	/**
+	 * Handles changing the reps, lbs, or rpe in a set.
+	 * @param {Event} event the input event.
+	 * @param {Number} exerciseIdx the index of the exercise template.
+	 * @param {Number} setNumber the index of the set.
+	 */
+	function handleEditSetDetail(event, exerciseIdx, setIdx, type) {
+		const newValue = parseInt(event.target.value);
+		setTemplate((template) => ({
+			...template,
+			exercises: template["exercises"].map((e, idx) =>
+				idx === exerciseIdx
 					? {
 							...e,
 							sets: e["sets"].map((set, idx) =>
-								idx + 1 === setNumber
+								idx === setIdx
 									? {
 											...set,
-											reps: newReps
+											[type]: newValue
 									  }
 									: set
 							)
@@ -119,97 +143,58 @@ const TemplatePage = () => {
 					: e
 			)
 		}));
-	};
+	}
 
-	/**
-	 * Handles changing lbs in a set.
-	 * @param {Event} event the input event.
-	 * @param {Number} exerciseId the exercise id.
-	 * @param {Number} setNumber the index of the set.
-	 */
-	const handleLbs = (event, exerciseId, setNumber) => {
-		const newLbs = parseInt(event.target.value);
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].map((e) =>
-				e.id === exerciseId
-					? {
-							...e,
-							sets: e["sets"].map((set, idx) =>
-								idx + 1 === setNumber
-									? {
-											...set,
-											lbs: newLbs
-									  }
-									: set
-							)
-					  }
-					: e
-			)
-		}));
-	};
-
-	/**
-	 * Handles changing rpe in a set.
-	 * @param {Event} event the input event.
-	 * @param {Number} exerciseId the exercise id.
-	 * @param {Number} setNumber the index of the set.
-	 */
-	const handleRpe = (event, exerciseId, setNumber) => {
-		const newRpe = parseInt(event.target.value);
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].map((e) =>
-				e.id === exerciseId
-					? {
-							...e,
-							sets: e["sets"].map((set, idx) =>
-								idx + 1 === setNumber
-									? {
-											...set,
-											rpe: newRpe
-									  }
-									: set
-							)
-					  }
-					: e
-			)
-		}));
-	};
+	function handleAddTemplateAndClear() {
+		handleAddTemplate({ ...template, name: template.name.trim() });
+		setTemplate(Template());
+	}
 
 	return (
 		<Container>
 			<Header variant='h5'>Create a Workout Template</Header>
-			<MyStack direction='column' spacing={3} alignItems='center'>
+			<Stack
+				direction='column'
+				spacing={3}
+				alignItems='center'
+				style={{
+					paddingBottom: "150px"
+				}}
+			>
 				<TextField
 					label='Workout Name'
 					variant='outlined'
+					value={template.name}
 					onChange={handleName}
 				/>
 				{/* Render all exercises here */}
 				<Stack direction='column' spacing={2} alignItems='center'>
-					{template.exercises.map((e) => (
+					{template.exercises.map((e, idx) => (
 						<ExerciseTemplate
 							exercise={e}
-							key={e.id}
-							handleDeleteExercise={handleDeleteExercise}
+							key={idx}
+							exerciseIdx={idx}
 							handleAddSet={handleAddSet}
-							handleReps={handleReps}
-							handleLbs={handleLbs}
-							handleRpe={handleRpe}
+							handleDeleteSet={handleDeleteSet}
+							handleDeleteExercise={handleDeleteExercise}
+							handleEditSetDetail={handleEditSetDetail}
 						/>
 					))}
 				</Stack>
-				<BlueBtn onClick={handleOpen}>+ Add Exercise</BlueBtn>
-				<GreenBtn onClick={null}>Create Template</GreenBtn>
-				<ExercisesDialog
-					selectedValue={""}
-					open={open}
-					onClose={handleClose}
-				/>
-			</MyStack>
+			</Stack>
+			<FullRowFixed>
+				<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
+				<GreenBtn onClick={handleAddTemplateAndClear}>
+					Create Template
+				</GreenBtn>
+			</FullRowFixed>
+			<ExercisesDialog
+				selectedValue={""}
+				open={openDialog}
+				handleCloseDialog={handleCloseDialog}
+			/>
 		</Container>
 	);
-};
+}
 
 export default TemplatePage;

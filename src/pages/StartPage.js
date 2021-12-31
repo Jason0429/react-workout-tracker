@@ -1,4 +1,4 @@
-function StartPage() {
+function StartPage({ user }) {
 	return <div>Start Page</div>;
 }
 

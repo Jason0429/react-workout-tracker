@@ -1,6 +1,7 @@
 {
 	"homepage": "http://Jason0429.github.io/react-workout-tracker",
 	"name": "react-workout-tracker",
+	"proxy": "http://127.0.0.1:5000",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -15,10 +16,16 @@
 		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^12.8.3",
 		"date-fns": "^2.26.0",
+		"dotenv": "^10.0.0",
+		"env-cmd": "^10.1.0",
+		"express": "^4.17.2",
 		"firebase": "^9.5.0",
+		"firebase-admin": "^10.0.1",
+		"google-auth-library": "^7.11.0",
 		"react": "^17.0.2",
 		"react-calendar": "^3.5.0",
 		"react-dom": "^17.0.2",
+		"react-google-login": "^5.2.2",
 		"react-redux": "^7.2.6",
 		"react-redux-firebase": "^3.11.0",
 		"react-router": "^6.0.2",
@@ -34,8 +41,8 @@
 	"scripts": {
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
-		"start": "react-scripts start",
-		"build": "react-scripts build",
+		"start": "env-cmd -f .env react-scripts start",
+		"build": "env-cmd -f .env react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},

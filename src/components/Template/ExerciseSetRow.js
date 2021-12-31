@@ -1,51 +1,59 @@
-// React
-import { useRef } from "react";
-
 // Material
 import { Stack } from "@mui/material";
 
 // Styles
-import { SetNumber, MyInput } from "./ExerciseSetRowStyles";
+import {
+	SetNumber,
+	MyInput,
+	CloseIconContainer,
+	MyCloseIcon
+} from "./ExerciseSetRow.styles";
 
-const ExerciseSetRow = ({
-	exerciseId,
-	setNumber,
-	handleReps,
-	handleLbs,
-	handleRpe
-}) => {
-	// const { reps, lbs, rpe } = set;
-	const repsRef = useRef();
-	const lbsRef = useRef();
-	const rpeRef = useRef();
-
+function ExerciseSetRow({
+	exerciseIdx,
+	setIdx,
+	handleDeleteSet,
+	handleEditSetDetail
+}) {
 	return (
-		<Stack
-			direction='row'
-			justifyContent='space-evenly'
-			alignItems='center'
-		>
-			<SetNumber>{setNumber}</SetNumber>
-			<MyInput
-				type='number'
-				ref={repsRef}
-				onChange={(event) => handleReps(event, exerciseId, setNumber)}
-				// value={reps}
-			/>
-			<MyInput
-				type='number'
-				ref={lbsRef}
-				onChange={(event) => handleLbs(event, exerciseId, setNumber)}
-				// value={lbs}
-			/>
-			<MyInput
-				type='number'
-				ref={rpeRef}
-				onChange={(event) => handleRpe(event, exerciseId, setNumber)}
-				// value={rpe}
-			/>
-		</Stack>
+		<>
+			<Stack
+				direction='row'
+				justifyContent='space-evenly'
+				alignItems='center'
+			>
+				<SetNumber>{setIdx + 1}</SetNumber>
+
+				<MyInput
+					className='reps'
+					type='number'
+					onChange={(event) =>
+						handleEditSetDetail(event, exerciseIdx, setIdx, "reps")
+					}
+				/>
+
+				<MyInput
+					className='lbs'
+					type='number'
+					onChange={(event) =>
+						handleEditSetDetail(event, exerciseIdx, setIdx, "lbs")
+					}
+				/>
+				<MyInput
+					className='rpe'
+					type='number'
+					onChange={(event) =>
+						handleEditSetDetail(event, exerciseIdx, setIdx, "rpe")
+					}
+				/>
+				<CloseIconContainer
+					onClick={() => handleDeleteSet(exerciseIdx, setIdx)}
+				>
+					<MyCloseIcon />
+				</CloseIconContainer>
+			</Stack>
+		</>
 	);
-};
+}
 
 export default ExerciseSetRow;

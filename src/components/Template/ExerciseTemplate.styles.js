@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 	background: #cecece50;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 20px;
-	width: 400px;
+	width: 350px;
 `;
 
 export const Header = styled.div`
 	font-weight: bold;
-	font-size: 1.2em;
+	font-size: 1em;
 `;
 
 export const SubHeader = styled.div`
@@ -20,11 +20,15 @@ export const SubHeader = styled.div`
 	color: darkslategray;
 `;
 
+export const Spacer = styled.div`
+	width: 40px;
+`;
+
 export const RedXBtn = styled.div`
 	font-weight: bold;
-	height: 22px;
-	width: 35px;
-	border-radius: 20px;
+	height: 25px;
+	width: 40px;
+	border-radius: 5px;
 	background: #ffcccb;
 	color: #ff726f;
 	display: flex;
@@ -42,7 +46,7 @@ export const GrayBtn = styled.div`
 	color: #00000090;
 	font-weight: bold;
 	font-size: 0.9em;
-	border-radius: 20px;
+	border-radius: 5px;
 	padding: 5px;
 	text-align: center;
 	cursor: pointer;
@@ -50,4 +54,8 @@ export const GrayBtn = styled.div`
 	&:hover {
 		color: #00000060;
 	}
+`;
+
+export const SpacerRow = styled.div`
+	width: 100%;
 `;

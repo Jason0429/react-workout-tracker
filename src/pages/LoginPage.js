@@ -1,18 +1,13 @@
-import styled from "styled-components";
-import GoogleSignInBtn from "../components/Login/GoogleSignInBtn";
+import GoogleLogo from "../img/google-logo.png";
+import { Container, Button } from "../components/Login/LoginPage.styles";
 
-function LoginPage() {
-	const Container = styled.div`
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	`;
-
+function LoginPage({ handleLogin }) {
 	return (
 		<Container>
-			<GoogleSignInBtn onClick={null} />
+			<Button onClick={handleLogin}>
+				<img src={GoogleLogo} />
+				&nbsp; Sign in with Google
+			</Button>
 		</Container>
 	);
 }

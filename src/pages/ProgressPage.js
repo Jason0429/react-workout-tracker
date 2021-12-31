@@ -1,4 +1,4 @@
-function ProgressPage() {
+function ProgressPage({ user }) {
 	return <div>Progress Page</div>;
 }
 

@@ -11,20 +11,22 @@ import {
 	Header,
 	SubHeader,
 	RedXBtn,
-	GrayBtn
-} from "./ExerciseTemplateStyles";
+	GrayBtn,
+	Spacer,
+	SpacerRow
+} from "./ExerciseTemplate.styles";
 
-const ExerciseTemplate = ({
+function ExerciseTemplate({
 	exercise,
+	exerciseIdx,
 	handleDeleteExercise,
 	handleAddSet,
-	handleReps,
-	handleLbs,
-	handleRpe
-}) => {
+	handleDeleteSet,
+	handleEditSetDetail
+}) {
 	return (
 		<Container>
-			<Stack direction='column' spacing={3}>
+			<Stack direction='column' spacing={2}>
 				{/* Name and Close Button */}
 				<Stack
 					direction='row'
@@ -32,7 +34,7 @@ const ExerciseTemplate = ({
 					alignItems='center'
 				>
 					<Header>{exercise.name}</Header>
-					<RedXBtn onClick={() => handleDeleteExercise(exercise.id)}>
+					<RedXBtn onClick={() => handleDeleteExercise(exerciseIdx)}>
 						<CloseIcon
 							style={{
 								width: "20px",
@@ -41,6 +43,8 @@ const ExerciseTemplate = ({
 						/>
 					</RedXBtn>
 				</Stack>
+
+				<SpacerRow></SpacerRow>
 
 				{/* Set, Reps, lbs., RPE headers */}
 				<Stack direction='column' spacing={2}>
@@ -53,28 +57,28 @@ const ExerciseTemplate = ({
 						<SubHeader>Reps</SubHeader>
 						<SubHeader>lbs.</SubHeader>
 						<SubHeader>RPE</SubHeader>
+						<Spacer></Spacer>
 					</Stack>
 
 					{/* Set Rows */}
-					{exercise.sets.map((set, key) => (
+					{exercise.sets.map((set, idx) => (
 						<ExerciseSetRow
-							exerciseId={exercise.id}
-							setNumber={key + 1}
-							key={key}
-							handleReps={handleReps}
-							handleLbs={handleLbs}
-							handleRpe={handleRpe}
+							key={idx}
+							exerciseIdx={exerciseIdx}
+							setIdx={idx}
+							handleDeleteSet={handleDeleteSet}
+							handleEditSetDetail={handleEditSetDetail}
 						/>
 					))}
 
 					{/* Add Set Row Button */}
-					<GrayBtn onClick={() => handleAddSet(exercise.id)}>
+					<GrayBtn onClick={() => handleAddSet(exerciseIdx)}>
 						+ Add Set
 					</GrayBtn>
 				</Stack>
 			</Stack>
 		</Container>
 	);
-};
+}
 
 export default ExerciseTemplate;

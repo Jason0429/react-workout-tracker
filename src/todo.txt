@@ -1,1 +1,29 @@
-- Custom exercise
+Menu
+- Go back to home
+- Go to template
+- Go to progress
+- Go to start
+
+		// const res = await fetch("/api/google-login", {
+		// 	method: "POST",
+		// 	body: JSON.stringify({
+		// 		token: googleData.tokenId
+		// 	}),
+		// 	headers: {
+		// 		"Content-Type": "application/json"
+		// 	}
+		// });
+		// const data = await res.json();
+
+- Set up firebase
+- Users[]
+    - userGoogleID{}
+        - email
+        - givenName
+        - familyName
+        - googleId
+        - imageURL
+        - name
+        - templates
+        - workouts
+        

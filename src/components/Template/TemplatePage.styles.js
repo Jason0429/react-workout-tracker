@@ -10,10 +10,6 @@ export const Container = styled.div`
 	align-items: center;
 `;
 
-export const MyStack = styled(Stack)`
-	width: 300px;
-`;
-
 export const Header = styled.div`
 	padding: 50px;
 	font-size: 2em;
@@ -26,7 +22,7 @@ export const BlueBtn = styled.div`
 	color: #00bfff;
 	padding: 8px;
 	text-align: center;
-	border-radius: 20px;
+	border-radius: 5px;
 	cursor: pointer;
 
 	&:hover {
@@ -41,10 +37,25 @@ export const GreenBtn = styled.div`
 	color: #52cc00;
 	padding: 8px;
 	text-align: center;
-	border-radius: 20px;
+	border-radius: 5px;
 	cursor: pointer;
 
 	&:hover {
 		color: #52cc0080;
 	}
+`;
+
+export const FullRowFixed = styled.div`
+	width: 100%;
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	height: 100px;
+	background: white;
+	box-shadow: 0 0 1px 1px #00000020;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
 `;
