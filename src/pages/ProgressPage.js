@@ -18,9 +18,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import FolderIcon from "@mui/icons-material/Folder";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ListItemButton from "@mui/material/ListItemButton";
 
 // Styles
 import * as Styles from "../components/Progress/ProgressPage.styles";
+import { styled } from "@mui/material/styles";
 
 const columns = [
 	{ id: "name", label: "Name", minWidth: 170 },
@@ -73,9 +83,12 @@ const rows = [
 
 function ProgressPage({ user }) {
 	const [dateSelected, setDateSelected] = useState(new Date());
-
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+
+	const Demo = styled("div")(({ theme }) => ({
+		backgroundColor: theme.palette.background.paper
+	}));
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -89,8 +102,6 @@ function ProgressPage({ user }) {
 	function handleChange(newValue) {
 		setDateSelected(newValue);
 	}
-
-	function isSameDay(date1, date2) {}
 
 	useEffect(() => {
 		// console.log(dateSelected);
@@ -196,7 +207,7 @@ function ProgressPage({ user }) {
 			</LocalizationProvider>
 			<Styles.WorkoutContainer>
 				<Typography>Workouts on this Day:</Typography>
-				<Stack direction='column' spacing={1}>
+				<List style={{ width: "350px" }}>
 					{user.workouts
 						.filter(
 							(w) =>
@@ -204,11 +215,26 @@ function ProgressPage({ user }) {
 								dateSelected.toDateString()
 						)
 						.map((w, idx) => (
-							<Typography key={idx} variant='body1'>
-								{w.name}
-							</Typography>
+							// Component will be NavLink to EditWorkoutPage
+							<ListItem
+								divider
+								key={idx}
+								secondaryAction={
+									<IconButton
+										edge='end'
+										aria-label='delete'
+										onClick={null}
+									>
+										<DeleteIcon />
+									</IconButton>
+								}
+							>
+								<ListItemButton onClick={null}>
+									<ListItemText primary={w.name} />
+								</ListItemButton>
+							</ListItem>
 						))}
-				</Stack>
+				</List>
 			</Styles.WorkoutContainer>
 		</Stack>
 	);

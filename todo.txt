@@ -4,3 +4,5 @@
 - Create calendar
     - Click on date to receive all workouts on that date
     - the workouts on that date will have inputs disabled
+
+- Delete workouts in table or list view
