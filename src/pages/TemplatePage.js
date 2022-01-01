@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 // Material
-import { TextField, Stack } from "@mui/material";
+import { TextField, Stack, Typography } from "@mui/material";
 
 // Components
 import ExercisesDialog from "../components/Template/ExercisesDialog";
@@ -152,7 +152,10 @@ function TemplatePage({ handleAddTemplate }) {
 
 	return (
 		<Container>
-			<Header variant='h5'>Create a Workout Template</Header>
+			<Typography variant='h6' mt={5} textAlign='center'>
+				Create a Workout Template
+			</Typography>
+			<br />
 			<Stack
 				direction='column'
 				spacing={3}
@@ -163,9 +166,10 @@ function TemplatePage({ handleAddTemplate }) {
 			>
 				<TextField
 					label='Workout Name'
-					variant='outlined'
+					variant='standard'
 					value={template.name}
 					onChange={handleName}
+					style={{ width: "100%", minWidth: "250px" }}
 				/>
 				{/* Render all exercises here */}
 				<Stack direction='column' spacing={2} alignItems='center'>

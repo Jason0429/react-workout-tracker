@@ -69,7 +69,7 @@ function Navbar({ user, handleLogout }) {
 					<ListItemIcon>
 						<FitnessCenterIcon fontSize='small' />
 					</ListItemIcon>
-					Start Workout
+					Log Workout
 				</MenuItem>
 				{/* <MenuItem>
 					<ListItemIcon>

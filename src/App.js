@@ -151,6 +151,13 @@ function App() {
 		}));
 	}
 
+	function handleDeleteTemplate(templateIdx) {
+		setUser((user) => ({
+			...user,
+			templates: user.templates.filter((_, idx) => idx !== templateIdx)
+		}));
+	}
+
 	if (loading) return <LoadingPage />;
 
 	return (
@@ -187,20 +194,25 @@ function App() {
 								exact
 								element={
 									<>
-										<StartPage user={user} />
+										<StartPage
+											user={user}
+											handleDeleteTemplate={
+												handleDeleteTemplate
+											}
+										/>
 									</>
 								}
 							/>
 							<Route
-								path='/'
-								exact
+								path='/*'
+								// exact
 								element={
 									<>
 										<HomePage user={user} />
 									</>
 								}
 							/>
-							<Route path='*' element={<ErrorPage />} />
+							{/* <Route path='*' element={<ErrorPage />} /> */}
 						</Routes>
 					</>
 				) : (
