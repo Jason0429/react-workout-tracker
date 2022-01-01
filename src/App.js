@@ -18,6 +18,8 @@ import ProgressPage from "./pages/ProgressPage";
 import TemplatePage from "./pages/TemplatePage";
 import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
+import EditTemplatePage from "./pages/EditTemplatePage";
+import EditWorkoutPage from "./pages/EditWorkoutPage";
 
 // Models
 import { User } from "./models/User.model";
@@ -35,43 +37,54 @@ import {
 	doc,
 	setDoc,
 	getDoc,
-	addDoc
+	addDoc,
+	query,
+	getDocs,
+	deleteDoc
 } from "firebase/firestore";
 
 function App() {
 	const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 
-	// useEffect(
-	// 	() => console.log(db.type),
-	// 	// Target an entire collection
-	// 	// onSnapshot(collection(db, "collectionName"), (snapshot) => {
-	// 	// 	console.log(snapshot.docs.map((doc) => doc.data()));
-	// 	// });
-	// 	// Target specific documents
-	// 	// onSnapshot(doc("color", "docID"), (doc) => {
-	// 	//     console.log(doc.data());
-	// 	// });
-	// 	[]
-	// );
+	// useEffect(() => {
+	// 	if (user) {
+	// 		onSnapshot(doc(db, "users", user.googleId), (doc) => {
+	// 			console.log("Snapshot: ", doc.data());
+	// 			// setUser(doc.data());
+	// 		});
+	// 	}
+	// }, []);
+
 	useEffect(async () => {
 		if (user) {
-			console.log(await updateUserInDB());
+			await updateUserInDB();
 		}
 	}, [user]);
 
-	useEffect(() => {
-		if (!localStorage.getItem("lastUserId")) {
-			setLoading(false);
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (!localStorage.getItem("lastUserId")) {
+	// 		setLoading(false);
+	// 	} else {
+	// 		signIn();
+	// 	}
+	// }, []);
 
+	/**
+	 * Updates user in database with current state of user.
+	 * @returns user
+	 */
 	async function updateUserInDB() {
 		await setDoc(doc(db, "users", user.googleId), user);
 		return user;
 	}
 
+	/**
+	 * Checks if user exists in database.
+	 * @param {*} googleId the user's googleId.
+	 * @returns {Boolean} true or false.
+	 */
 	async function isUserInDB(googleId) {
 		return Boolean((await getDoc(doc(db, "users", googleId))).data());
 	}
@@ -99,9 +112,9 @@ function App() {
 			setUser(userInDB);
 		}
 
-		setLoading(false);
+		// setLoading(false);
 
-		localStorage.setItem("lastUserId", profile.googleId);
+		// localStorage.setItem("lastUserId", profile.googleId);
 		// refreshTokenSetup(res);
 	}
 
@@ -109,7 +122,7 @@ function App() {
 		console.log("Failure: ", res);
 		setUser(null);
 
-		setLoading(false);
+		// setLoading(false);
 	}
 
 	function onLogoutSuccess() {
@@ -145,6 +158,7 @@ function App() {
 	}
 
 	function handleAddTemplate(template) {
+		// addDoc(collection(db, `users/${user.googleId}/templates`), template);
 		setUser((user) => ({
 			...user,
 			templates: [...user.templates, template]
@@ -154,11 +168,34 @@ function App() {
 	function handleDeleteTemplate(templateIdx) {
 		setUser((user) => ({
 			...user,
-			templates: user.templates.filter((_, idx) => idx !== templateIdx)
+			templates: user["templates"].filter((_, idx) => idx !== templateIdx)
 		}));
 	}
 
-	if (loading) return <LoadingPage />;
+	function handleUpdateTemplate(template) {
+		setUser((user) => ({
+			...user,
+			templates: user["templates"].map((t) =>
+				t.id === template.id ? template : t
+			)
+		}));
+	}
+
+	function handleAddWorkout(workout) {
+		setUser((user) => ({
+			...user,
+			workouts: [...user["workouts"], workout]
+		}));
+	}
+
+	function handleDeleteWorkout(workout) {
+		setUser((user) => ({
+			...user,
+			workouts: user["workouts"].filter((w) => w.id !== workout.id)
+		}));
+	}
+
+	// if (loading) return <LoadingPage />;
 
 	return (
 		<Router>
@@ -175,6 +212,20 @@ function App() {
 										<TemplatePage
 											handleAddTemplate={
 												handleAddTemplate
+											}
+										/>
+									</>
+								}
+							/>
+							<Route
+								path='/template/edit/:id'
+								exact
+								element={
+									<>
+										<EditTemplatePage
+											templates={user.templates}
+											handleUpdateTemplate={
+												handleUpdateTemplate
 											}
 										/>
 									</>
@@ -199,6 +250,18 @@ function App() {
 											handleDeleteTemplate={
 												handleDeleteTemplate
 											}
+										/>
+									</>
+								}
+							/>
+							<Route
+								path='/start/:id'
+								exact
+								element={
+									<>
+										<EditWorkoutPage
+											templates={user.templates}
+											handleAddWorkout={handleAddWorkout}
 										/>
 									</>
 								}

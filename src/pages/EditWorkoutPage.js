@@ -1,5 +1,6 @@
 // React
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 // Material
 import { TextField, Stack, Typography } from "@mui/material";
@@ -8,28 +9,43 @@ import { TextField, Stack, Typography } from "@mui/material";
 import ExercisesDialog from "../components/Template/ExercisesDialog";
 import ExerciseTemplate from "../components/Template/ExerciseTemplate";
 
-// Models
-import { Set } from "../models/Set.model";
-import { Template } from "../models/Template.model";
-
 // Styles
 import {
 	Container,
-	Header,
 	BlueBtn,
+	RedBtn,
 	GreenBtn,
 	FullRowFixed
-} from "../components/Template/TemplatePage.styles";
+} from "../components/Start/EditWorkoutPage.styles";
 
-function TemplatePage({ handleAddTemplate }) {
-	const [template, setTemplate] = useState(Template());
+// Models
+import { Workout } from "../models/Workout.model";
+
+function EditWorkoutPage({ templates, handleAddWorkout }) {
+	// Id of template, if any
+	const { id } = useParams();
+	const [workout, setWorkout] = useState(getNewWorkout(id));
 	const [openDialog, setOpenDialog] = useState(false);
-	const isValid = Boolean(template.name);
 	const endOfExercisesRef = useRef();
 
 	useEffect(() => {
 		scrollToBottom();
 	}, [handleAddExercise]);
+
+	function getNewWorkout(id) {
+		let newWorkout = Workout();
+		const template = templates.filter((t) => t.id === id)[0];
+
+		if (!template) return newWorkout;
+
+		newWorkout = {
+			...newWorkout,
+			name: template.name,
+			exercises: template.exercises
+		};
+
+		return newWorkout;
+	}
 
 	function scrollToBottom() {
 		endOfExercisesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,8 +56,8 @@ function TemplatePage({ handleAddTemplate }) {
 	 * @param {Event} e the TextField event.
 	 */
 	function handleName(e) {
-		setTemplate((prev) => ({
-			...prev,
+		setWorkout((w) => ({
+			...w,
 			name: e.target.value
 		}));
 	}
@@ -67,9 +83,9 @@ function TemplatePage({ handleAddTemplate }) {
 	 * @param {Exercise} exercise
 	 */
 	function handleAddExercise(exercise) {
-		setTemplate((prev) => ({
-			...prev,
-			exercises: [...prev["exercises"], exercise]
+		setWorkout((w) => ({
+			...w,
+			exercises: [...w["exercises"], exercise]
 		}));
 	}
 
@@ -78,11 +94,9 @@ function TemplatePage({ handleAddTemplate }) {
 	 * @param {Number} exerciseIdx the index of the exercise template.
 	 */
 	function handleDeleteExercise(exerciseIdx) {
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].filter(
-				(_, idx) => idx !== exerciseIdx
-			)
+		setWorkout((w) => ({
+			...w,
+			exercises: w["exercises"].filter((_, idx) => idx !== exerciseIdx)
 		}));
 	}
 
@@ -91,9 +105,9 @@ function TemplatePage({ handleAddTemplate }) {
 	 * @param {String} exerciseIdx the index of the exercise template.
 	 */
 	function handleAddSet(exerciseIdx) {
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].map((exercise, idx) =>
+		setWorkout((w) => ({
+			...w,
+			exercises: w["exercises"].map((exercise, idx) =>
 				idx === exerciseIdx
 					? {
 							...exercise,
@@ -113,9 +127,9 @@ function TemplatePage({ handleAddTemplate }) {
 	 * @param {Number} setIdx the index of the set.
 	 */
 	function handleDeleteSet(exerciseIdx, setIdx) {
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].map((exercise, idx) =>
+		setWorkout((w) => ({
+			...w,
+			exercises: w["exercises"].map((exercise, idx) =>
 				idx === exerciseIdx
 					? {
 							...exercise,
@@ -137,9 +151,9 @@ function TemplatePage({ handleAddTemplate }) {
 	function handleEditSetDetail(event, exerciseIdx, setIdx) {
 		const type = event.target.name;
 		const newValue = parseInt(event.target.value);
-		setTemplate((template) => ({
-			...template,
-			exercises: template["exercises"].map((exercise, idx) =>
+		setWorkout((w) => ({
+			...w,
+			exercises: w["exercises"].map((exercise, idx) =>
 				idx === exerciseIdx
 					? {
 							...exercise,
@@ -157,17 +171,17 @@ function TemplatePage({ handleAddTemplate }) {
 		}));
 	}
 
-	function handleAddTemplateAndClear() {
-		if (template.name.trim() === "") return;
-		handleAddTemplate({ ...template, name: template.name.trim() });
-		setTemplate(Template());
+	function handleAddWorkoutAndClear() {
+		if (workout.name.trim() === "") return;
+		handleAddWorkout(workout);
+		// User directed to start page afterwards.
 	}
 
 	return (
 		<Container>
 			<Stack direction='column' spacing={2} style={{ width: "350px" }}>
 				<Typography variant='h6' mt={5} textAlign='center'>
-					Create a Workout Template
+					Log Workout
 				</Typography>
 				<Stack
 					direction='column'
@@ -178,17 +192,16 @@ function TemplatePage({ handleAddTemplate }) {
 					}}
 				>
 					<TextField
-						error={!isValid}
 						required
 						label='Workout Name'
 						variant='standard'
-						value={template.name}
+						value={workout.name}
 						onChange={handleName}
 						style={{ width: "100%", minWidth: "250px" }}
 					/>
 					{/* Render all exercises here */}
 					<Stack direction='column' spacing={2} alignItems='center'>
-						{template.exercises.map((e, idx) => (
+						{workout.exercises.map((e, idx) => (
 							<ExerciseTemplate
 								exercise={e}
 								key={idx}
@@ -204,8 +217,9 @@ function TemplatePage({ handleAddTemplate }) {
 				</Stack>
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
-					<GreenBtn onClick={handleAddTemplateAndClear}>
-						Create Template
+					<RedBtn to='/start'>Cancel</RedBtn>
+					<GreenBtn onClick={handleAddWorkoutAndClear} to='/start'>
+						Save Workout
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
@@ -218,4 +232,4 @@ function TemplatePage({ handleAddTemplate }) {
 	);
 }
 
-export default TemplatePage;
+export default EditWorkoutPage;

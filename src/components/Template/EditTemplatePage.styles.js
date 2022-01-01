@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Container = styled.div`
 	margin-top: 50px;
@@ -24,7 +25,7 @@ export const BlueBtn = styled.div`
 	}
 `;
 
-export const GreenBtn = styled.div`
+export const GreenBtn = styled(NavLink)`
 	font-weight: bold;
 	width: 300px;
 	background: #66ff0030;
@@ -33,9 +34,28 @@ export const GreenBtn = styled.div`
 	text-align: center;
 	border-radius: 5px;
 	cursor: pointer;
+	text-decoration: none;
 
 	&:hover {
 		color: #52cc0080;
+	}
+`;
+
+export const RedBtn = styled(NavLink)`
+	font-weight: bold;
+	width: 300px;
+	padding: 8px;
+	border-radius: 5px;
+	background: #ffcccb;
+	text-decoration: none;
+	color: #ff726f;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+
+	&:hover {
+		color: #ff726f80;
 	}
 `;
 
@@ -46,7 +66,7 @@ export const FullRowFixed = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
-	height: 100px;
+	height: 150px;
 	background: white;
 	box-shadow: 0 0 1px 1px #00000020;
 	bottom: 0;

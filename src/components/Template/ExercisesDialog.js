@@ -63,7 +63,14 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 	};
 
 	return (
-		<Dialog onClose={handleClose} open={open} fullWidth={true}>
+		<Dialog
+			onClose={handleClose}
+			open={open}
+			fullWidth={true}
+			style={{
+				height: "90vh !important"
+			}}
+		>
 			<DialogTitle>Select an Exercise</DialogTitle>
 			{/* Search Bar */}
 			<TextField
@@ -97,7 +104,18 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 				</CustomExerciseSubmitBtn>
 			</Stack>
 
-			<List sx={{ pt: 0 }}>
+			{/* <div
+				style={{
+					height: "600px",
+					background: "red"
+				}}
+			> */}
+			<List
+				sx={{ pt: 0 }}
+				style={{
+					height: "80vh"
+				}}
+			>
 				{exercises
 					.filter((exercise) =>
 						exercise.name
@@ -114,6 +132,7 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 						</ListItem>
 					))}
 			</List>
+			{/* </div> */}
 		</Dialog>
 	);
 }

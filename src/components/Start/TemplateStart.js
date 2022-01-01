@@ -1,5 +1,6 @@
 // React
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { NavLink } from "react-router-dom";
 
 // Styles
 import * as Styles from "./TemplateStart.styles";
@@ -48,79 +49,88 @@ function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
 
 	return (
 		<Styles.Container>
-			<Stack
-				direction='column'
-				spacing={0}
-				divider={<Divider orientation='horizontal' flexItem />}
+			<NavLink
+				to={`/start/${template?.id}`}
+				style={{ textDecoration: "none", color: "initial", zIndex: 1 }}
 			>
-				<Stack
-					direction='row'
-					alignItems='center'
-					justifyContent='space-between'
-				>
-					<Typography
-						variant='subtitle1'
-						style={{ fontWeight: "bold" }}
-					>
-						{template.name}
-					</Typography>
-					<IconButton size='small' onClick={handleOpenMenu}>
-						<MoreVertIcon />
-					</IconButton>
-
-					<Menu
-						anchorEl={anchorEl}
-						open={openMenu}
-						onClose={handleCloseMenu}
-						onClick={handleCloseMenu}
-						transformOrigin={{
-							horizontal: "right",
-							vertical: "top"
-						}}
-						anchorOrigin={{
-							horizontal: "right",
-							vertical: "bottom"
-						}}
-					>
-						<MenuItem>
-							<ListItemIcon>
-								<EditIcon fontSize='small' />
-							</ListItemIcon>
-							<Typography>Edit</Typography>
-						</MenuItem>
-						<MenuItem
-							onClick={() => handleDeleteTemplate(templateIdx)}
-						>
-							<ListItemIcon>
-								<DeleteForeverIcon
-									fontSize='small'
-									style={{ color: "#ff726f" }}
-								/>
-							</ListItemIcon>
-							<Typography color='#ff726f'>Delete</Typography>
-						</MenuItem>
-					</Menu>
-				</Stack>
-
 				<Stack
 					direction='column'
 					spacing={0}
-					style={{
-						height: "100%"
-					}}
+					divider={<Divider orientation='horizontal' flexItem />}
 				>
-					{renderExerciseNames().map((e, idx) => (
+					<Stack
+						direction='row'
+						alignItems='center'
+						justifyContent='space-between'
+					>
 						<Typography
-							variant='caption'
-							noWrap
-							style={{ width: "90%" }}
-							key={idx}
+							variant='subtitle1'
+							style={{ fontWeight: "bold" }}
 						>
-							{e}
+							{template.name}
 						</Typography>
-					))}
+					</Stack>
+
+					<Stack direction='column' spacing={0} pt={1} pb={1}>
+						{renderExerciseNames().map((e, idx) => (
+							<Typography
+								variant='caption'
+								noWrap
+								style={{ width: "90%" }}
+								key={idx}
+							>
+								{e}
+							</Typography>
+						))}
+					</Stack>
 				</Stack>
-			</Stack>
+			</NavLink>
+			<IconButton
+				size='small'
+				onClick={handleOpenMenu}
+				style={{
+					zIndex: 3,
+					position: "absolute",
+					right: 0,
+					top: 0
+				}}
+			>
+				<MoreVertIcon />
+			</IconButton>
+
+			<Menu
+				anchorEl={anchorEl}
+				open={openMenu}
+				onClose={handleCloseMenu}
+				onClick={handleCloseMenu}
+				transformOrigin={{
+					horizontal: "right",
+					vertical: "top"
+				}}
+				anchorOrigin={{
+					horizontal: "right",
+					vertical: "bottom"
+				}}
+			>
+				<MenuItem
+					component={NavLink}
+					to={`/template/edit/${template.id}`}
+				>
+					<ListItemIcon>
+						<EditIcon fontSize='small' />
+					</ListItemIcon>
+					<Typography>Edit</Typography>
+				</MenuItem>
+				<MenuItem onClick={() => handleDeleteTemplate(templateIdx)}>
+					<ListItemIcon>
+						<DeleteForeverIcon
+							fontSize='small'
+							style={{ color: "#ff726f" }}
+						/>
+					</ListItemIcon>
+					<Typography color='#ff726f'>Delete</Typography>
+				</MenuItem>
+			</Menu>
 		</Styles.Container>
 	);
 }

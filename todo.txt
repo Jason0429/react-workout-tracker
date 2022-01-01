@@ -1,0 +1,6 @@
+- Send request to db, then update state
+- Option to create template if templates empty
+- View Template onclick
+- Create calendar
+    - Click on date to receive all workouts on that date
+    - the workouts on that date will have inputs disabled

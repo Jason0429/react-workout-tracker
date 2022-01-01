@@ -12,6 +12,7 @@ import {
 function ExerciseSetRow({
 	exerciseIdx,
 	setIdx,
+	set,
 	handleDeleteSet,
 	handleEditSetDetail
 }) {
@@ -25,25 +26,28 @@ function ExerciseSetRow({
 				<SetNumber>{setIdx + 1}</SetNumber>
 
 				<MyInput
-					className='reps'
+					name='reps'
 					type='number'
-					onChange={(event) =>
-						handleEditSetDetail(event, exerciseIdx, setIdx, "reps")
+					value={set?.reps}
+					onChange={(e) =>
+						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}
 				/>
 
 				<MyInput
-					className='lbs'
+					name='lbs'
 					type='number'
-					onChange={(event) =>
-						handleEditSetDetail(event, exerciseIdx, setIdx, "lbs")
+					value={set?.lbs}
+					onChange={(e) =>
+						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}
 				/>
 				<MyInput
-					className='rpe'
+					name='rpe'
 					type='number'
-					onChange={(event) =>
-						handleEditSetDetail(event, exerciseIdx, setIdx, "rpe")
+					value={set?.rpe}
+					onChange={(e) =>
+						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}
 				/>
 				<CloseIconContainer

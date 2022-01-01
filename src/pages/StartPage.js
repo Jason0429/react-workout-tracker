@@ -15,7 +15,6 @@ function StartPage({ user, handleDeleteTemplate }) {
 					<Styles.Header>Templates</Styles.Header>
 					<Grid
 						container
-						// spacing={{ xs: 2, md: 3 }}
 						columns={{ xs: 1, sm: 6, md: 12 }}
 						gap={2}
 						style={{
@@ -34,7 +33,9 @@ function StartPage({ user, handleDeleteTemplate }) {
 						))}
 					</Grid>
 				</Stack>
-				<Styles.Header>Start Your Own Workout</Styles.Header>
+				<Styles.BlueBtn to={`/start/new`}>
+					Start Own Workout
+				</Styles.BlueBtn>
 			</Styles.MyStack>
 		</Styles.Container>
 	);

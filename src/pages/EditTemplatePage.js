@@ -1,5 +1,6 @@
 // React
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 // Material
 import { TextField, Stack, Typography } from "@mui/material";
@@ -8,23 +9,21 @@ import { TextField, Stack, Typography } from "@mui/material";
 import ExercisesDialog from "../components/Template/ExercisesDialog";
 import ExerciseTemplate from "../components/Template/ExerciseTemplate";
 
-// Models
-import { Set } from "../models/Set.model";
-import { Template } from "../models/Template.model";
-
 // Styles
 import {
 	Container,
-	Header,
 	BlueBtn,
+	RedBtn,
 	GreenBtn,
 	FullRowFixed
-} from "../components/Template/TemplatePage.styles";
+} from "../components/Template/EditTemplatePage.styles";
 
-function TemplatePage({ handleAddTemplate }) {
-	const [template, setTemplate] = useState(Template());
+function EditTemplatePage({ templates, handleUpdateTemplate }) {
+	const { id } = useParams();
+	const [template, setTemplate] = useState(
+		templates.filter((t) => t.id === id)[0]
+	);
 	const [openDialog, setOpenDialog] = useState(false);
-	const isValid = Boolean(template.name);
 	const endOfExercisesRef = useRef();
 
 	useEffect(() => {
@@ -157,17 +156,17 @@ function TemplatePage({ handleAddTemplate }) {
 		}));
 	}
 
-	function handleAddTemplateAndClear() {
+	function handleUpdateTemplateAndClear() {
 		if (template.name.trim() === "") return;
-		handleAddTemplate({ ...template, name: template.name.trim() });
-		setTemplate(Template());
+		handleUpdateTemplate({ ...template, name: template.name.trim() });
+		// User directed to start page afterwards.
 	}
 
 	return (
 		<Container>
 			<Stack direction='column' spacing={2} style={{ width: "350px" }}>
 				<Typography variant='h6' mt={5} textAlign='center'>
-					Create a Workout Template
+					Edit Workout Template
 				</Typography>
 				<Stack
 					direction='column'
@@ -178,7 +177,6 @@ function TemplatePage({ handleAddTemplate }) {
 					}}
 				>
 					<TextField
-						error={!isValid}
 						required
 						label='Workout Name'
 						variant='standard'
@@ -204,8 +202,12 @@ function TemplatePage({ handleAddTemplate }) {
 				</Stack>
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
-					<GreenBtn onClick={handleAddTemplateAndClear}>
-						Create Template
+					<RedBtn to='/start'>Cancel</RedBtn>
+					<GreenBtn
+						onClick={handleUpdateTemplateAndClear}
+						to='/start'
+					>
+						Update Template
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
@@ -218,4 +220,4 @@ function TemplatePage({ handleAddTemplate }) {
 	);
 }
 
-export default TemplatePage;
+export default EditTemplatePage;

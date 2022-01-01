@@ -64,6 +64,7 @@ function ExerciseTemplate({
 					{exercise.sets.map((set, idx) => (
 						<ExerciseSetRow
 							key={idx}
+							set={set}
 							exerciseIdx={exerciseIdx}
 							setIdx={idx}
 							handleDeleteSet={handleDeleteSet}
