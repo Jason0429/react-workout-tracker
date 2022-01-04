@@ -46,30 +46,12 @@ import {
 function App() {
 	const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 	const [user, setUser] = useState(null);
-	// const [loading, setLoading] = useState(true);
-
-	// useEffect(() => {
-	// 	if (user) {
-	// 		onSnapshot(doc(db, "users", user.googleId), (doc) => {
-	// 			console.log("Snapshot: ", doc.data());
-	// 			// setUser(doc.data());
-	// 		});
-	// 	}
-	// }, []);
 
 	useEffect(async () => {
 		if (user) {
 			await updateUserInDB();
 		}
 	}, [user]);
-
-	// useEffect(() => {
-	// 	if (!localStorage.getItem("lastUserId")) {
-	// 		setLoading(false);
-	// 	} else {
-	// 		signIn();
-	// 	}
-	// }, []);
 
 	/**
 	 * Updates user in database with current state of user.
