@@ -85,7 +85,7 @@ function App() {
 		const profile = res.profileObj;
 
 		// If user does not exist in db
-		if (!(await isUserInDB(profile.googleId))) {
+		if (!isUserInDB(profile.googleId)) {
 			const newUser = User(profile);
 			await setUserInDB(newUser.googleId, newUser);
 			setUser(newUser);
