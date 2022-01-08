@@ -18,5 +18,5 @@ export const Nav = styled.div`
 	align-items: center;
 	box-shadow: 0 0 1px 1px #00000020;
 	background: white;
-	z-index: 2;
+	z-index: 100;
 `;
