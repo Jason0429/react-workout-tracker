@@ -12,7 +12,7 @@
 
 ## TemplatePage, EditTemplatePage, EditWorkoutPage
 
-- [ ] Try to incorporate draggable to change order of exercises
+- [x] Try to incorporate draggable to change order of exercises
 - [ ] Set scrollToBottom anchor where ever new setrow forms.
 - [ ] Add accordion to collapse and drop setrows.
 - [ ] If in the middle of editing, and user switches out, open warning dialog
