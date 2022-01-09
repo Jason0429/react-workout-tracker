@@ -21,11 +21,15 @@ import LoadingPage from "./pages/LoadingPage";
 import EditTemplatePage from "./pages/EditTemplatePage";
 import EditWorkoutPage from "./pages/EditWorkoutPage";
 
+// Material UI
+import { IconButton, Snackbar } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 // Models
 import { User } from "./models/User.model";
 
 // Utils
-import { refreshTokenSetup } from "./utils/refreshToken";
+// import { refreshTokenSetup } from "./utils/refreshToken";
 import "./hooks/hooks";
 import { useGoogleLogout, useGoogleLogin } from "react-google-login";
 
@@ -46,6 +50,8 @@ import {
 function App() {
 	const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 	const [user, setUser] = useState(null);
+	const [openSnackbar, setOpenSnackbar] = useState(false);
+	const [snackbarMessage, setSnackbarMessage] = useState("");
 
 	useEffect(async () => {
 		if (user) {
@@ -177,12 +183,39 @@ function App() {
 		}));
 	}
 
+	function handleOpenSnackbar(message) {
+		setSnackbarMessage(message);
+		setOpenSnackbar(true);
+	}
+
+	function handleCloseSnackbar() {
+		setOpenSnackbar(false);
+	}
+
 	// if (loading) return <LoadingPage />;
 
 	return (
 		<Router>
 			<Main>
 				{user && <Navbar user={user} handleLogout={handleLogout} />}
+				{user && (
+					<Snackbar
+						open={openSnackbar}
+						autoHideDuration={3000}
+						onClose={handleCloseSnackbar}
+						message={snackbarMessage}
+						action={
+							<IconButton
+								size='small'
+								aria-label='close'
+								color='inherit'
+								onClick={handleCloseSnackbar}
+							>
+								<CloseIcon fontSize='small' />
+							</IconButton>
+						}
+					/>
+				)}
 				{user ? (
 					<>
 						<Routes>
@@ -194,6 +227,9 @@ function App() {
 										<TemplatePage
 											handleAddTemplate={
 												handleAddTemplate
+											}
+											handleOpenSnackbar={
+												handleOpenSnackbar
 											}
 										/>
 									</>
@@ -208,6 +244,9 @@ function App() {
 											templates={user.templates}
 											handleUpdateTemplate={
 												handleUpdateTemplate
+											}
+											handleOpenSnackbar={
+												handleOpenSnackbar
 											}
 										/>
 									</>
@@ -244,6 +283,9 @@ function App() {
 										<EditWorkoutPage
 											templates={user.templates}
 											handleAddWorkout={handleAddWorkout}
+											handleOpenSnackbar={
+												handleOpenSnackbar
+											}
 										/>
 									</>
 								}

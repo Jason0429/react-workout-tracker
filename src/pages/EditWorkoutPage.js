@@ -21,22 +21,29 @@ import {
 // Models
 import { Workout } from "../models/Workout.model";
 
-function EditWorkoutPage({ templates, handleAddWorkout }) {
+function EditWorkoutPage({ templates, handleAddWorkout, handleOpenSnackbar }) {
 	// Id of template, if any
 	const { id } = useParams();
 	const [workout, setWorkout] = useState(getNewWorkout(id));
 	const [openDialog, setOpenDialog] = useState(false);
 	const endOfExercisesRef = useRef();
 
-	useEffect(() => {
-		scrollToBottom();
-	}, [handleAddExercise]);
+	// useEffect(() => {
+	// 	scrollToBottom();
+	// }, [handleAddExercise]);
+
+	if (workout == null) {
+		return "Workout Not Found";
+	}
 
 	function getNewWorkout(id) {
-		let newWorkout = Workout();
 		const template = templates.filter((t) => t.id === id)[0];
 
-		if (!template) return newWorkout;
+		if (template.length == 0) {
+			return null;
+		}
+
+		let newWorkout = Workout();
 
 		newWorkout = {
 			...newWorkout,
@@ -171,9 +178,10 @@ function EditWorkoutPage({ templates, handleAddWorkout }) {
 		}));
 	}
 
-	function handleAddWorkoutAndClear() {
+	function handleSaveWorkout() {
 		if (workout.name.trim() === "") return;
 		handleAddWorkout(workout);
+		handleOpenSnackbar("Successfully saved workout");
 		// User directed to start page afterwards.
 	}
 
@@ -218,7 +226,7 @@ function EditWorkoutPage({ templates, handleAddWorkout }) {
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
 					<RedBtn to='/start'>Cancel</RedBtn>
-					<GreenBtn onClick={handleAddWorkoutAndClear} to='/start'>
+					<GreenBtn onClick={handleSaveWorkout} to='/start'>
 						Save Workout
 					</GreenBtn>
 				</FullRowFixed>

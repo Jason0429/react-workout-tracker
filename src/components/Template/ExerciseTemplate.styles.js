@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-	background: #cecece50;
-	padding: 15px;
-	border-radius: 20px;
-	width: 350px;
-`;
-
 export const Header = styled.div`
 	font-weight: bold;
 	font-size: 1em;

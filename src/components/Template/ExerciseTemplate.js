@@ -1,5 +1,5 @@
 // Material
-import { Stack } from "@mui/material";
+import { Stack, Paper } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 // Components
@@ -7,7 +7,6 @@ import ExerciseSetRow from "./ExerciseSetRow";
 
 // Styles
 import {
-	Container,
 	Header,
 	SubHeader,
 	RedXBtn,
@@ -25,7 +24,14 @@ function ExerciseTemplate({
 	handleEditSetDetail
 }) {
 	return (
-		<Container>
+		<Paper
+			variant='outlined'
+			sx={{
+				background: "#cecece50",
+				width: "350px",
+				padding: "15px"
+			}}
+		>
 			<Stack direction='column' spacing={2}>
 				{/* Name and Close Button */}
 				<Stack
@@ -78,7 +84,7 @@ function ExerciseTemplate({
 					</GrayBtn>
 				</Stack>
 			</Stack>
-		</Container>
+		</Paper>
 	);
 }
 

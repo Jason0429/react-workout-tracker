@@ -9,6 +9,7 @@
     -   Check || X (for completion or not)
 
 -   Option to delete workouts
+-   Set navlink to view workout
 
 ## Create Template Page
 
@@ -17,3 +18,11 @@
 ## Start Page
 
     -   Dialog that says deleted template (red)
+
+## ALL EDIT Pages
+
+-   Set scrollToBottom anchor where ever new setrow forms.
+
+## Loading
+
+-   Set up Skeletons MUI

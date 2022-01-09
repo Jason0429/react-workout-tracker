@@ -7,9 +7,13 @@ import { Typography, Stack, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import { MobileDatePicker, CalendarPicker } from "@mui/lab";
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+	MobileDatePicker,
+	CalendarPicker,
+	DesktopDatePicker,
+	StaticDatePicker
+} from "@mui/lab";
+// import { BrowserView, MobileView } from "react-device-detect";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -64,40 +68,16 @@ function ProgressPage({ user }) {
 				variant='outlined'
 				sx={{ height: "fit-content", paddingBottom: "20px" }}
 			>
-				<Stack direction='column' alignItems='center'>
-					<LocalizationProvider dateAdapter={AdapterDateFns}>
-						{/* Calendar Picker */}
-						<CalendarPicker
-							date={dateSelected}
-							onChange={handleDateChange}
-							renderInput={(params) => <TextField {...params} />}
-						/>
-
-						{/* Date Pickers (Browser and Mobile) */}
-						<BrowserView>
-							<DesktopDatePicker
-								label='Select Date'
-								inputFormat='MM/dd/yyyy'
-								value={dateSelected}
-								onChange={handleDateChange}
-								renderInput={(params) => (
-									<TextField {...params} />
-								)}
-							/>
-						</BrowserView>
-						<MobileView>
-							<MobileDatePicker
-								label='Select Date'
-								inputFormat='MM/dd/yyyy'
-								value={dateSelected}
-								onChange={handleDateChange}
-								renderInput={(params) => (
-									<TextField {...params} />
-								)}
-							/>
-						</MobileView>
-					</LocalizationProvider>
-				</Stack>
+				{/* Calendar / Date Picker */}
+				<LocalizationProvider dateAdapter={AdapterDateFns}>
+					<StaticDatePicker
+						orientation='portrait'
+						openTo='day'
+						value={dateSelected}
+						onChange={handleDateChange}
+						renderInput={(params) => <TextField {...params} />}
+					/>
+				</LocalizationProvider>
 			</Paper>
 			{/* Workouts on this day list */}
 			<Paper

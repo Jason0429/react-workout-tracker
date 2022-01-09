@@ -3,7 +3,14 @@ import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // Material
-import { TextField, Stack, Typography } from "@mui/material";
+import {
+	TextField,
+	Stack,
+	Typography,
+	Snackbar,
+	IconButton
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 // Components
 import ExercisesDialog from "../components/Template/ExercisesDialog";
@@ -18,7 +25,11 @@ import {
 	FullRowFixed
 } from "../components/Template/EditTemplatePage.styles";
 
-function EditTemplatePage({ templates, handleUpdateTemplate }) {
+function EditTemplatePage({
+	templates,
+	handleUpdateTemplate,
+	handleOpenSnackbar
+}) {
 	const { id } = useParams();
 	const [template, setTemplate] = useState(
 		templates.filter((t) => t.id === id)[0]
@@ -26,9 +37,12 @@ function EditTemplatePage({ templates, handleUpdateTemplate }) {
 	const [openDialog, setOpenDialog] = useState(false);
 	const endOfExercisesRef = useRef();
 
-	useEffect(() => {
-		scrollToBottom();
-	}, [handleAddExercise]);
+	// If template id is not valid.
+	if (template == []) return "Template Not Found";
+
+	// useEffect(() => {
+	// 	scrollToBottom();
+	// }, [handleAddExercise]);
 
 	function scrollToBottom() {
 		endOfExercisesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -156,9 +170,10 @@ function EditTemplatePage({ templates, handleUpdateTemplate }) {
 		}));
 	}
 
-	function handleUpdateTemplateAndClear() {
+	function handleUpdateTemplateBtn() {
 		if (template.name.trim() === "") return;
 		handleUpdateTemplate({ ...template, name: template.name.trim() });
+		handleOpenSnackbar("Successfully updated template");
 		// User directed to start page afterwards.
 	}
 
@@ -203,10 +218,7 @@ function EditTemplatePage({ templates, handleUpdateTemplate }) {
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
 					<RedBtn to='/start'>Cancel</RedBtn>
-					<GreenBtn
-						onClick={handleUpdateTemplateAndClear}
-						to='/start'
-					>
+					<GreenBtn onClick={handleUpdateTemplateBtn} to='/start'>
 						Update Template
 					</GreenBtn>
 				</FullRowFixed>

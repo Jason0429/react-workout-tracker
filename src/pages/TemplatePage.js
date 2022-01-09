@@ -2,14 +2,20 @@
 import { useState, useEffect, useRef } from "react";
 
 // Material
-import { TextField, Stack, Typography } from "@mui/material";
+import {
+	TextField,
+	Stack,
+	Typography,
+	Snackbar,
+	IconButton
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 // Components
 import ExercisesDialog from "../components/Template/ExercisesDialog";
 import ExerciseTemplate from "../components/Template/ExerciseTemplate";
 
 // Models
-import { Set } from "../models/Set.model";
 import { Template } from "../models/Template.model";
 
 // Styles
@@ -21,15 +27,15 @@ import {
 	FullRowFixed
 } from "../components/Template/TemplatePage.styles";
 
-function TemplatePage({ handleAddTemplate }) {
+function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 	const [template, setTemplate] = useState(Template());
 	const [openDialog, setOpenDialog] = useState(false);
 	const isValid = Boolean(template.name);
 	const endOfExercisesRef = useRef();
 
-	useEffect(() => {
-		scrollToBottom();
-	}, [handleAddExercise]);
+	// useEffect(() => {
+	// 	scrollToBottom();
+	// }, [handleAddExercise]);
 
 	function scrollToBottom() {
 		endOfExercisesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -157,10 +163,11 @@ function TemplatePage({ handleAddTemplate }) {
 		}));
 	}
 
-	function handleAddTemplateAndClear() {
+	function handleCreateTemplate() {
 		if (template.name.trim() === "") return;
 		handleAddTemplate({ ...template, name: template.name.trim() });
 		setTemplate(Template());
+		handleOpenSnackbar("Successfully created template");
 	}
 
 	return (
@@ -204,7 +211,7 @@ function TemplatePage({ handleAddTemplate }) {
 				</Stack>
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
-					<GreenBtn onClick={handleAddTemplateAndClear}>
+					<GreenBtn onClick={handleCreateTemplate}>
 						Create Template
 					</GreenBtn>
 				</FullRowFixed>

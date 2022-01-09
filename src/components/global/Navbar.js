@@ -35,7 +35,12 @@ function Navbar({ user, handleLogout }) {
 	return (
 		<Nav>
 			<Logo>{user ? user?.name : "Workout Tracker"}</Logo>
-			<IconButton onClick={handleOpen} size='small' sx={{ ml: 2 }}>
+			<IconButton
+				onClick={handleOpen}
+				size='small'
+				sx={{ ml: 2 }}
+				className='mui-fixed'
+			>
 				<Avatar sx={{ width: 35, height: 35 }} src={imageUrl || null} />
 			</IconButton>
 
