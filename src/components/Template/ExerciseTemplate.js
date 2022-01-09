@@ -1,6 +1,17 @@
+// React
+import { useState } from "react";
+
 // Material
-import { Stack, Paper } from "@mui/material";
+import {
+	Stack,
+	Paper,
+	IconButton,
+	Accordion,
+	AccordionSummary,
+	AccordionDetails
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 // Components
 import ExerciseSetRow from "./ExerciseSetRow";
@@ -23,67 +34,92 @@ function ExerciseTemplate({
 	handleDeleteSet,
 	handleEditSetDetail
 }) {
+	const [expanded, setExpanded] = useState(true);
+
 	return (
 		<Paper
 			variant='outlined'
 			sx={{
 				background: "#cecece50",
-				width: "350px",
-				padding: "15px"
+				width: "350px"
 			}}
 		>
-			<Stack direction='column' spacing={2}>
-				{/* Name and Close Button */}
-				<Stack
-					direction='row'
-					justifyContent='space-between'
-					alignItems='center'
-				>
-					<Header>{exercise.name}</Header>
-					<RedXBtn onClick={() => handleDeleteExercise(exerciseIdx)}>
-						<CloseIcon
-							style={{
-								width: "20px",
-								height: "20px"
-							}}
-						/>
-					</RedXBtn>
-				</Stack>
-
-				<SpacerRow></SpacerRow>
-
-				{/* Set, Reps, lbs., RPE headers */}
-				<Stack direction='column' spacing={2}>
+			<Accordion
+				disableGutters
+				expanded={expanded}
+				onChange={() => setExpanded((expanded) => !expanded)}
+				sx={{
+					background: "transparent",
+					boxShadow: "none"
+				}}
+			>
+				<AccordionSummary>
+					{/* Name and Close Button */}
 					<Stack
 						direction='row'
-						justifyContent='space-evenly'
+						justifyContent='space-between'
 						alignItems='center'
+						width='100%'
 					>
-						<SubHeader>Set</SubHeader>
-						<SubHeader>Reps</SubHeader>
-						<SubHeader>lbs.</SubHeader>
-						<SubHeader>RPE</SubHeader>
-						<Spacer></Spacer>
+						<IconButton size='small'>
+							<KeyboardArrowDownIcon
+								sx={{
+									// width: "100%",
+									transform: `rotate(${
+										expanded ? "0deg" : "180deg"
+									})`,
+									transition: "0.1s ease-in-out"
+								}}
+							/>
+						</IconButton>
+						<Header>{exercise.name}</Header>
+						<RedXBtn
+							onClick={() => handleDeleteExercise(exerciseIdx)}
+						>
+							<CloseIcon
+								style={{
+									width: "20px",
+									height: "20px"
+								}}
+							/>
+						</RedXBtn>
 					</Stack>
+				</AccordionSummary>
 
-					{/* Set Rows */}
-					{exercise.sets.map((set, idx) => (
-						<ExerciseSetRow
-							key={idx}
-							set={set}
-							exerciseIdx={exerciseIdx}
-							setIdx={idx}
-							handleDeleteSet={handleDeleteSet}
-							handleEditSetDetail={handleEditSetDetail}
-						/>
-					))}
+				<AccordionDetails>
+					{/* Set, Reps, lbs., RPE headers */}
+					<Stack direction='column' spacing={2}>
+						<Stack
+							direction='row'
+							justifyContent='space-evenly'
+							alignItems='center'
+						>
+							<SubHeader>Set</SubHeader>
+							<SubHeader>Reps</SubHeader>
+							<SubHeader>lbs.</SubHeader>
+							<SubHeader>RPE</SubHeader>
+							<Spacer></Spacer>
+						</Stack>
 
-					{/* Add Set Row Button */}
-					<GrayBtn onClick={() => handleAddSet(exerciseIdx)}>
-						+ Add Set
-					</GrayBtn>
-				</Stack>
-			</Stack>
+						{/* Set Rows */}
+						{exercise.sets.map((set, idx) => (
+							<ExerciseSetRow
+								key={idx}
+								set={set}
+								exerciseIdx={exerciseIdx}
+								setIdx={idx}
+								handleDeleteSet={handleDeleteSet}
+								handleEditSetDetail={handleEditSetDetail}
+							/>
+						))}
+
+						{/* Add Set Row Button */}
+						<GrayBtn onClick={() => handleAddSet(exerciseIdx)}>
+							+ Add Set
+						</GrayBtn>
+					</Stack>
+				</AccordionDetails>
+			</Accordion>
 		</Paper>
 	);
 }

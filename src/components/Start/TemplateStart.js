@@ -13,7 +13,8 @@ import {
 	Divider,
 	Menu,
 	MenuItem,
-	ListItemIcon
+	ListItemIcon,
+	Paper
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
@@ -48,7 +49,15 @@ function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
 	}
 
 	return (
-		<Styles.Container>
+		<Paper
+			variant='outlined'
+			sx={{
+				padding: "4px 10px",
+				height: "150px",
+				position: "relative",
+				cursor: "pointer"
+			}}
+		>
 			<NavLink
 				to={`/start/${template?.id}`}
 				style={{ textDecoration: "none", color: "initial", zIndex: 1 }}
@@ -131,7 +140,7 @@ function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
 					<Typography color='#ff726f'>Delete</Typography>
 				</MenuItem>
 			</Menu>
-		</Styles.Container>
+		</Paper>
 	);
 }
 

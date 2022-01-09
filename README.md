@@ -2,27 +2,38 @@
 
 ## Progress Page
 
--   Progress Table
-
-    -   Date
-    -   Workout Name || None
-    -   Check || X (for completion or not)
-
--   Option to delete workouts
--   Set navlink to view workout
+-   [] See if you can modify calendar to show check or X mark
 
 ## Create Template Page
 
-    -   Dialog that says created template (Green)
+    -   [x] Dialog that says created template
 
 ## Start Page
 
-    -   Dialog that says deleted template (red)
-
-## ALL EDIT Pages
-
--   Set scrollToBottom anchor where ever new setrow forms.
+    -   [x] Dialog that says deleted template (red)
 
 ## Loading
 
--   Set up Skeletons MUI
+-   [] Set up Skeletons MUI
+-   [] Disable sign in with google button when loading
+
+## TemplatePage, EditTemplatePage, EditWorkoutPage
+
+-   [] Try to incorporate draggable to change order of exercises
+-   [] Set scrollToBottom anchor where ever new setrow forms.
+-   [] Add accordion to collapse and drop setrows.
+-   [] If in the middle of editing, and user switches out, open warning dialog
+    -   "Do you want to save your changes? Any unsaved edits will be discarded."
+
+## Database, ExerciseDialog
+
+-   [] Put exercises list on database
+-   [] Add custom exercises to exercises list
+-   [] Have option to remove exercises
+
+## Exercises Tab
+
+-   [] Option to add and remove exercises
+    -   Name of exercises
+    -   Categories
+    -   Generate unique ID

@@ -16,12 +16,6 @@ export const Header = styled.div`
 	font-size: 1.5em;
 `;
 
-export const MyStack = styled(Stack)`
-	width: 100%;
-	max-width: 800px;
-	padding: 20px;
-`;
-
 export const BlueBtn = styled(NavLink)`
 	font-weight: bold;
 	width: 300px;

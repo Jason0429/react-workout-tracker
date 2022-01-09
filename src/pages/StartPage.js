@@ -2,7 +2,7 @@
 import TemplateStart from "../components/Start/TemplateStart";
 
 // Material
-import { Stack, Grid, Paper } from "@mui/material";
+import { Stack, Grid, Paper, Typography } from "@mui/material";
 
 // Styles
 import * as Styles from "../components/Start/StartPage.styles";
@@ -10,13 +10,20 @@ import * as Styles from "../components/Start/StartPage.styles";
 function StartPage({ user, handleDeleteTemplate }) {
 	return (
 		<Styles.Container>
-			<Styles.MyStack spacing={3}>
+			<Stack
+				spacing={3}
+				sx={{
+					width: "100%",
+					maxWidth: "800px",
+					padding: "20px"
+				}}
+			>
 				<Stack direction='column' spacing={2}>
-					<Styles.Header>Templates</Styles.Header>
+					<Typography variant='h5'>Templates</Typography>
 					<Grid
 						container
 						columns={{ xs: 1, sm: 6, md: 12 }}
-						gap={2}
+						gap={3}
 						style={{
 							width: "100%"
 						}}
@@ -36,7 +43,7 @@ function StartPage({ user, handleDeleteTemplate }) {
 				<Styles.BlueBtn to={`/start/new`}>
 					Start Own Workout
 				</Styles.BlueBtn>
-			</Styles.MyStack>
+			</Stack>
 		</Styles.Container>
 	);
 }

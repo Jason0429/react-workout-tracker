@@ -118,9 +118,7 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 						>
 							<ListItemButton
 								component={NavLink}
-								// NavLink to EditWorkoutPage
 								to={`/start/${workout.id}`}
-								// onClick={null}
 							>
 								<ListItemText primary={workout.name} />
 							</ListItemButton>

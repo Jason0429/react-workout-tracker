@@ -142,7 +142,7 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 	 */
 	function handleEditSetDetail(event, exerciseIdx, setIdx) {
 		const type = event.target.name;
-		const newValue = parseInt(event.target.value);
+		let newValue = parseInt(event.target.value);
 		setTemplate((template) => ({
 			...template,
 			exercises: template["exercises"].map((exercise, idx) =>
@@ -164,7 +164,8 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 	}
 
 	function handleCreateTemplate() {
-		if (template.name.trim() === "") return;
+		if (template.name.trim() === "")
+			return handleOpenSnackbar("Please enter a template name");
 		handleAddTemplate({ ...template, name: template.name.trim() });
 		setTemplate(Template());
 		handleOpenSnackbar(

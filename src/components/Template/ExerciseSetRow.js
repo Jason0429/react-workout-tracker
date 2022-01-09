@@ -29,6 +29,7 @@ function ExerciseSetRow({
 					name='reps'
 					type='number'
 					value={set?.reps}
+					inputProps={{ min: 0 }}
 					onChange={(e) =>
 						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}
@@ -38,6 +39,7 @@ function ExerciseSetRow({
 					name='lbs'
 					type='number'
 					value={set?.lbs}
+					inputProps={{ min: 0 }}
 					onChange={(e) =>
 						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}
@@ -46,6 +48,7 @@ function ExerciseSetRow({
 					name='rpe'
 					type='number'
 					value={set?.rpe}
+					inputProps={{ min: 0, max: 10 }}
 					onChange={(e) =>
 						handleEditSetDetail(e, exerciseIdx, setIdx)
 					}

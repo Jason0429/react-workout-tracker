@@ -42,13 +42,13 @@ function EditWorkoutPage({
 	}
 
 	function getNewWorkout(id) {
+		// If starting own new workout
+		if (id === "new") {
+			return Workout();
+		}
+
 		const templateIfExists = user.templates.filter((t) => t.id === id)[0];
 		const workoutIfExists = user.workouts.filter((w) => w.id === id)[0];
-
-		// If neither a template or workout exists with this id
-		if (!templateIfExists && !workoutIfExists) {
-			return null;
-		}
 
 		// If using template, create new workout id
 		if (templateIfExists) {
@@ -64,6 +64,7 @@ function EditWorkoutPage({
 			return workoutIfExists;
 		}
 
+		// If neither a template or workout exists with this id
 		return null;
 	}
 
