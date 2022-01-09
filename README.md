@@ -2,19 +2,12 @@
 
 ## Progress Page
 
--   [] See if you can modify calendar to show check or X mark
-
-## Create Template Page
-
-    -   [x] Dialog that says created template
-
-## Start Page
-
-    -   [x] Dialog that says deleted template (red)
+[] See if you can modify calendar to show check or X mark
 
 ## Loading
 
--   [] Set up Skeletons MUI
+[x] Set up Skeletons MUI
+
 -   [] Disable sign in with google button when loading
 
 ## TemplatePage, EditTemplatePage, EditWorkoutPage
