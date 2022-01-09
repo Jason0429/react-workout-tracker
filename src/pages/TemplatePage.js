@@ -167,7 +167,9 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 		if (template.name.trim() === "") return;
 		handleAddTemplate({ ...template, name: template.name.trim() });
 		setTemplate(Template());
-		handleOpenSnackbar("Successfully created template");
+		handleOpenSnackbar(
+			`Successfully created template: ${template.name.trim()}`
+		);
 	}
 
 	return (

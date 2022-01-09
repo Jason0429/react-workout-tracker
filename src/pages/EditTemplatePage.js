@@ -173,7 +173,9 @@ function EditTemplatePage({
 	function handleUpdateTemplateBtn() {
 		if (template.name.trim() === "") return;
 		handleUpdateTemplate({ ...template, name: template.name.trim() });
-		handleOpenSnackbar("Successfully updated template");
+		handleOpenSnackbar(
+			`Successfully updated template: ${template.name.trim()}`
+		);
 		// User directed to start page afterwards.
 	}
 

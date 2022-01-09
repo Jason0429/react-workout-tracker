@@ -21,7 +21,12 @@ import {
 // Models
 import { Workout } from "../models/Workout.model";
 
-function EditWorkoutPage({ templates, handleAddWorkout, handleOpenSnackbar }) {
+function EditWorkoutPage({
+	user,
+	handleAddWorkout,
+	handleUpdateWorkout,
+	handleOpenSnackbar
+}) {
 	// Id of template, if any
 	const { id } = useParams();
 	const [workout, setWorkout] = useState(getNewWorkout(id));
@@ -37,21 +42,29 @@ function EditWorkoutPage({ templates, handleAddWorkout, handleOpenSnackbar }) {
 	}
 
 	function getNewWorkout(id) {
-		const template = templates.filter((t) => t.id === id)[0];
+		const templateIfExists = user.templates.filter((t) => t.id === id)[0];
+		const workoutIfExists = user.workouts.filter((w) => w.id === id)[0];
 
-		if (template.length == 0) {
+		// If neither a template or workout exists with this id
+		if (!templateIfExists && !workoutIfExists) {
 			return null;
 		}
 
-		let newWorkout = Workout();
+		// If using template, create new workout id
+		if (templateIfExists) {
+			let newWorkout = Workout();
+			newWorkout = {
+				...newWorkout,
+				name: templateIfExists.name,
+				exercises: templateIfExists.exercises
+			};
+			return newWorkout;
+			// If editing existing workout, keep same id
+		} else if (workoutIfExists) {
+			return workoutIfExists;
+		}
 
-		newWorkout = {
-			...newWorkout,
-			name: template.name,
-			exercises: template.exercises
-		};
-
-		return newWorkout;
+		return null;
 	}
 
 	function scrollToBottom() {
@@ -180,8 +193,22 @@ function EditWorkoutPage({ templates, handleAddWorkout, handleOpenSnackbar }) {
 
 	function handleSaveWorkout() {
 		if (workout.name.trim() === "") return;
-		handleAddWorkout(workout);
-		handleOpenSnackbar("Successfully saved workout");
+
+		// Decide whether to add workout or update existing workout
+		// by getting all current workouts with same id.
+		// If matched, update workout, else add workout.
+		if (user.workouts.filter((w) => w.id === workout.id).length > 0) {
+			handleUpdateWorkout(workout);
+			handleOpenSnackbar(
+				`Successfully updated workout: ${workout.name.trim()}`
+			);
+		} else {
+			handleAddWorkout(workout);
+			handleOpenSnackbar(
+				`Successfully added new workout: ${workout.name.trim()}`
+			);
+		}
+
 		// User directed to start page afterwards.
 	}
 

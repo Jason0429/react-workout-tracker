@@ -1,5 +1,6 @@
 // React
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 // Material
 import "react-calendar/dist/Calendar.css";
@@ -28,7 +29,7 @@ import * as Styles from "../components/Progress/ProgressPage.styles";
 // Hooks
 import { useWindowSize } from "../hooks/hooks";
 
-function ProgressPage({ user }) {
+function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 	const [width, height] = useWindowSize();
 	const [dateSelected, setDateSelected] = useState(new Date());
 	const [workoutsOnThisDay, setWorkoutsOnThisDay] = useState(
@@ -37,7 +38,7 @@ function ProgressPage({ user }) {
 
 	useEffect(() => {
 		setWorkoutsOnThisDay(getWorkoutsOnThisDay(dateSelected));
-	}, [dateSelected]);
+	}, [dateSelected, user.workouts]);
 
 	function getWorkoutsOnThisDay(dateSelected) {
 		return user.workouts.filter(
@@ -95,7 +96,7 @@ function ProgressPage({ user }) {
 				</Typography>
 				<Divider />
 				<List sx={{ width: "350px", padding: "0" }}>
-					{workoutsOnThisDay.map((w, idx) => (
+					{workoutsOnThisDay.map((workout, idx) => (
 						<ListItem
 							divider
 							key={idx}
@@ -104,17 +105,24 @@ function ProgressPage({ user }) {
 									edge='end'
 									aria-label='delete'
 									// To delete workout
-									onClick={null}
+									onClick={() => {
+										handleDeleteWorkout(workout);
+										handleOpenSnackbar(
+											`Successfully deleted workout: ${workout.name}`
+										);
+									}}
 								>
 									<DeleteIcon />
 								</IconButton>
 							}
 						>
 							<ListItemButton
+								component={NavLink}
 								// NavLink to EditWorkoutPage
-								onClick={null}
+								to={`/start/${workout.id}`}
+								// onClick={null}
 							>
-								<ListItemText primary={w.name} />
+								<ListItemText primary={workout.name} />
 							</ListItemButton>
 						</ListItem>
 					))}

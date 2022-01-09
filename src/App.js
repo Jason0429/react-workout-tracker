@@ -169,6 +169,15 @@ function App() {
 		}));
 	}
 
+	function handleUpdateWorkout(workout) {
+		setUser((user) => ({
+			...user,
+			workouts: user["workouts"].map((w) =>
+				w.id === workout.id ? workout : w
+			)
+		}));
+	}
+
 	function handleAddWorkout(workout) {
 		setUser((user) => ({
 			...user,
@@ -257,7 +266,15 @@ function App() {
 								exact
 								element={
 									<>
-										<ProgressPage user={user} />
+										<ProgressPage
+											user={user}
+											handleDeleteWorkout={
+												handleDeleteWorkout
+											}
+											handleOpenSnackbar={
+												handleOpenSnackbar
+											}
+										/>
 									</>
 								}
 							/>
@@ -281,8 +298,11 @@ function App() {
 								element={
 									<>
 										<EditWorkoutPage
-											templates={user.templates}
+											user={user}
 											handleAddWorkout={handleAddWorkout}
+											handleUpdateWorkout={
+												handleUpdateWorkout
+											}
 											handleOpenSnackbar={
 												handleOpenSnackbar
 											}
