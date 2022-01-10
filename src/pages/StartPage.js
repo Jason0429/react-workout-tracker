@@ -2,7 +2,7 @@
 import TemplateStart from "../components/Start/TemplateStart";
 
 // Material
-import { Stack, Grid, Paper, Typography } from "@mui/material";
+import { Stack, Grid, Typography } from "@mui/material";
 
 // Styles
 import * as Styles from "../components/Start/StartPage.styles";

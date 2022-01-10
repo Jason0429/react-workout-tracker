@@ -13,54 +13,62 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-// Styles
-import { CustomExerciseSubmitBtn } from "./ExercisesDialog.styles";
-
-// Data
-import { exercises } from "../../data/exercises";
+// Functions
+import * as AppFunctions from "../../App";
 
 // Models
 import { Exercise } from "../../models/Exercise.model";
 
-function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
+function ExercisesDialog({
+	exercises,
+	handleOpenSnackbar,
+	handleCloseDialog,
+	handleAddCustomExercise,
+	selectedValue,
+	open
+}) {
 	const [searchTerm, setSearchTerm] = useState("");
-	const [customExercise, setCustomExercise] = useState("");
+	const [customExerciseName, setCustomExerciseName] = useState("");
 
 	/**
 	 * Handles closing the dialog and clearing search field.
 	 */
-	const handleClose = () => {
+	function handleClose() {
+		// alert(selectedValue);
 		handleCloseDialog(selectedValue);
 		setSearchTerm("");
-		setCustomExercise("");
-	};
+		setCustomExerciseName("");
+	}
 
 	/**
-	 * Handles selecting an exercise from dialog.
+	 * Handles  exercise from dialog.
 	 * @param {Exercise} value the selected exercise.
 	 */
-	const handleAddExercise = (exercise) => {
-		if (exercise.name === "") return;
+	function handleAddExercise(exercise) {
+		if (exercise.name.trim() === "") return;
+		if (!exercises.some((e) => e.name === exercise.name)) {
+			handleAddCustomExercise(exercise);
+		}
 		handleCloseDialog(exercise);
 		setSearchTerm("");
-		setCustomExercise("");
-	};
+		setCustomExerciseName("");
+	}
 
 	/**
 	 * Handles searching of exercise.
 	 * @param {Event} e the text field input event.
 	 */
-	const handleSearchOnChange = (e) => {
+	function handleSearchOnChange(e) {
 		setSearchTerm(e.target.value);
-	};
+	}
 
 	/**
 	 * Handles custom exercise name state change.
 	 * @param {Event} e the text field event.
 	 */
-	const handleCustomExerciseOnChange = (e) => {
-		setCustomExercise(e.target.value);
-	};
+	function handleCustomExerciseOnChange(e) {
+		setCustomExerciseName(e.target.value);
+	}
 
 	return (
 		<Dialog
@@ -80,37 +88,45 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 				autoFocus
 			/>
 			{/* Custom Exercise */}
-			<Stack direction='row' fullWidth={true}>
+			<Stack
+				direction='row'
+				fullWidth={true}
+				alignItems='center'
+				sx={{
+					position: "relative"
+				}}
+			>
 				<TextField
 					label='Enter custom exercise'
 					variant='filled'
-					style={{ flex: 0.9 }}
 					onChange={handleCustomExerciseOnChange}
+					sx={{
+						width: "100%"
+					}}
 					onKeyPress={(e) =>
 						e.key === "Enter"
 							? handleAddExercise(
-									Exercise(customExercise.trim(), ["Custom"])
+									Exercise(customExerciseName.trim(), [
+										"Custom"
+									])
 							  )
 							: null
 					}
 				/>
-				<CustomExerciseSubmitBtn
+				<SendIcon
+					sx={{
+						position: "absolute",
+						right: "10px",
+						zIndex: 2,
+						cursor: "pointer"
+					}}
 					onClick={() =>
 						handleAddExercise(
-							Exercise(customExercise.trim(), ["Custom"])
+							Exercise(customExerciseName.trim(), ["Custom"])
 						)
 					}
-				>
-					<SendIcon />
-				</CustomExerciseSubmitBtn>
+				/>
 			</Stack>
-
-			{/* <div
-				style={{
-					height: "600px",
-					background: "red"
-				}}
-			> */}
 			<List
 				sx={{ pt: 0 }}
 				style={{
@@ -121,8 +137,7 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 					.sort((a, b) => {
 						if (a.name < b.name) {
 							return -1;
-						}
-						if (a.name > b.name) {
+						} else if (a.name > b.name) {
 							return 1;
 						}
 						return 0;
@@ -142,7 +157,6 @@ function ExercisesDialog({ handleCloseDialog, selectedValue, open }) {
 						</ListItem>
 					))}
 			</List>
-			{/* </div> */}
 		</Dialog>
 	);
 }

@@ -9,7 +9,7 @@ import {
 	Snackbar,
 	IconButton
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+// import CloseIcon from "@mui/icons-material/Close";
 
 // Components
 import ExercisesDialog from "../components/Template/ExercisesDialog";
@@ -27,7 +27,12 @@ import {
 	FullRowFixed
 } from "../components/Template/TemplatePage.styles";
 
-function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
+function TemplatePage({
+	user,
+	handleAddTemplate,
+	handleOpenSnackbar,
+	handleAddCustomExercise
+}) {
 	const [template, setTemplate] = useState(Template());
 	const [openDialog, setOpenDialog] = useState(false);
 	const isValid = Boolean(template.name);
@@ -60,15 +65,6 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 	}
 
 	/**
-	 * Handles closing dialog and selecting exercise.
-	 * @param {Exercise | ""} exercise the selected exercise.
-	 */
-	function handleCloseDialog(exercise) {
-		if (exercise !== "") handleAddExercise(exercise);
-		setOpenDialog(false);
-	}
-
-	/**
 	 * Handles adding an exercise to array of exercises in template.
 	 * @param {Exercise} exercise
 	 */
@@ -77,6 +73,17 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 			...prev,
 			exercises: [...prev["exercises"], exercise]
 		}));
+	}
+
+	/**
+	 * Handles closing dialog and adding exercise to template.
+	 * @param {Exercise | ""} exercise the selected exercise.
+	 */
+	function handleCloseDialog(exercise) {
+		// If no exercise was selected.
+		if (!exercise) return setOpenDialog(false);
+		handleAddExercise(exercise);
+		setOpenDialog(false);
 	}
 
 	/**
@@ -219,9 +226,12 @@ function TemplatePage({ handleAddTemplate, handleOpenSnackbar }) {
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
+					exercises={user.exercises}
 					selectedValue={""}
 					open={openDialog}
+					handleOpenSnackbar={handleOpenSnackbar}
 					handleCloseDialog={handleCloseDialog}
+					handleAddCustomExercise={handleAddCustomExercise}
 				/>
 			</Stack>
 		</Container>

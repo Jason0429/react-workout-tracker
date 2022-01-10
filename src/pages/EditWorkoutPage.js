@@ -25,7 +25,8 @@ function EditWorkoutPage({
 	user,
 	handleAddWorkout,
 	handleUpdateWorkout,
-	handleOpenSnackbar
+	handleOpenSnackbar,
+	handleAddCustomExercise
 }) {
 	// Id of template, if any
 	const { id } = useParams();
@@ -84,23 +85,14 @@ function EditWorkoutPage({
 	}
 
 	/**
-	 * Handles open dialog.
+	 * Handles opening dialog.
 	 */
 	function handleOpenDialog() {
 		setOpenDialog(true);
 	}
 
 	/**
-	 * Handles closing dialog and selecting exercise.
-	 * @param {Exercise | ""} exercise the selected exercise.
-	 */
-	function handleCloseDialog(exercise) {
-		if (exercise !== "") handleAddExercise(exercise);
-		setOpenDialog(false);
-	}
-
-	/**
-	 * Handles adding an exercise to array of exercises in template.
+	 * Handles adding an exercise to array of exercises in workout.
 	 * @param {Exercise} exercise
 	 */
 	function handleAddExercise(exercise) {
@@ -108,6 +100,17 @@ function EditWorkoutPage({
 			...w,
 			exercises: [...w["exercises"], exercise]
 		}));
+	}
+
+	/**
+	 * Handles closing dialog and adding exercise to workout.
+	 * @param {Exercise | ""} exercise the selected exercise.
+	 */
+	function handleCloseDialog(exercise) {
+		// If no exercise was selected.
+		if (!exercise) return setOpenDialog(false);
+		handleAddExercise(exercise);
+		setOpenDialog(false);
 	}
 
 	/**
@@ -259,9 +262,12 @@ function EditWorkoutPage({
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
+					exercises={user.exercises}
 					selectedValue={""}
 					open={openDialog}
 					handleCloseDialog={handleCloseDialog}
+					handleOpenSnackbar={handleOpenSnackbar}
+					handleAddCustomExercise={handleAddCustomExercise}
 				/>
 			</Stack>
 		</Container>

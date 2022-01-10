@@ -26,19 +26,20 @@ import {
 } from "../components/Template/EditTemplatePage.styles";
 
 function EditTemplatePage({
-	templates,
+	user,
 	handleUpdateTemplate,
-	handleOpenSnackbar
+	handleOpenSnackbar,
+	handleAddCustomExercise
 }) {
 	const { id } = useParams();
 	const [template, setTemplate] = useState(
-		templates.filter((t) => t.id === id)[0]
+		user.templates.filter((t) => t.id === id)[0] || null
 	);
 	const [openDialog, setOpenDialog] = useState(false);
 	const endOfExercisesRef = useRef();
 
 	// If template id is not valid.
-	if (template == []) return "Template Not Found";
+	if (template === null) return "Template Not Found";
 
 	// useEffect(() => {
 	// 	scrollToBottom();
@@ -67,15 +68,6 @@ function EditTemplatePage({
 	}
 
 	/**
-	 * Handles closing dialog and selecting exercise.
-	 * @param {Exercise | ""} exercise the selected exercise.
-	 */
-	function handleCloseDialog(exercise) {
-		if (exercise !== "") handleAddExercise(exercise);
-		setOpenDialog(false);
-	}
-
-	/**
 	 * Handles adding an exercise to array of exercises in template.
 	 * @param {Exercise} exercise
 	 */
@@ -84,6 +76,17 @@ function EditTemplatePage({
 			...prev,
 			exercises: [...prev["exercises"], exercise]
 		}));
+	}
+
+	/**
+	 * Handles closing dialog and adding exercise to template.
+	 * @param {Exercise | ""} exercise the selected exercise.
+	 */
+	function handleCloseDialog(exercise) {
+		// If no exercise was selected.
+		if (!exercise) return setOpenDialog(false);
+		handleAddExercise(exercise);
+		setOpenDialog(false);
 	}
 
 	/**
@@ -225,9 +228,12 @@ function EditTemplatePage({
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
+					exercises={user.exercises}
 					selectedValue={""}
 					open={openDialog}
 					handleCloseDialog={handleCloseDialog}
+					handleOpenSnackbar={handleOpenSnackbar}
+					handleAddCustomExercise={handleAddCustomExercise}
 				/>
 			</Stack>
 		</Container>

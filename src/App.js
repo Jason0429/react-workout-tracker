@@ -20,6 +20,7 @@ import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
 import EditTemplatePage from "./pages/EditTemplatePage";
 import EditWorkoutPage from "./pages/EditWorkoutPage";
+import MyExercisesPage from "./pages/MyExercisesPage";
 
 // Material UI
 import { IconButton, Snackbar } from "@mui/material";
@@ -59,6 +60,8 @@ function App() {
 		}
 	}, [user]);
 
+	useEffect(() => console.log(user));
+
 	/**
 	 * Updates user in database with current state of user.
 	 * @returns user
@@ -91,26 +94,20 @@ function App() {
 		const profile = res.profileObj;
 
 		// If user does not exist in db
-		if (!isUserInDB(profile.googleId)) {
+		if (!(await isUserInDB(profile.googleId))) {
 			const newUser = User(profile);
 			await setUserInDB(newUser.googleId, newUser);
 			setUser(newUser);
 		} else {
+			// If user exists in db
 			const userInDB = await getUserInDB(profile.googleId);
 			setUser(userInDB);
 		}
-
-		// setLoading(false);
-
-		// localStorage.setItem("lastUserId", profile.googleId);
-		// refreshTokenSetup(res);
 	}
 
 	function onLoginFailure(res) {
 		console.log("Failure: ", res);
 		setUser(null);
-
-		// setLoading(false);
 	}
 
 	function onLogoutSuccess() {
@@ -192,6 +189,18 @@ function App() {
 		}));
 	}
 
+	/**
+	 * Adds custom exercise to user's list of exercises.
+	 * @param {Exercise} customExercise custom exercise made by user.
+	 */
+	function handleAddCustomExercise(customExercise) {
+		if (user.exercises.some((e) => e.name === customExercise.name)) return;
+		setUser((user) => ({
+			...user,
+			exercises: [...user["exercises"], customExercise]
+		}));
+	}
+
 	function handleOpenSnackbar(message) {
 		setSnackbarMessage(message);
 		setOpenSnackbar(true);
@@ -234,11 +243,15 @@ function App() {
 								element={
 									<>
 										<TemplatePage
+											user={user}
 											handleAddTemplate={
 												handleAddTemplate
 											}
 											handleOpenSnackbar={
 												handleOpenSnackbar
+											}
+											handleAddCustomExercise={
+												handleAddCustomExercise
 											}
 										/>
 									</>
@@ -250,12 +263,15 @@ function App() {
 								element={
 									<>
 										<EditTemplatePage
-											templates={user.templates}
+											user={user}
 											handleUpdateTemplate={
 												handleUpdateTemplate
 											}
 											handleOpenSnackbar={
 												handleOpenSnackbar
+											}
+											handleAddCustomExercise={
+												handleAddCustomExercise
 											}
 										/>
 									</>
@@ -306,7 +322,19 @@ function App() {
 											handleOpenSnackbar={
 												handleOpenSnackbar
 											}
+											handleAddCustomExercise={
+												handleAddCustomExercise
+											}
 										/>
+									</>
+								}
+							/>
+							<Route
+								path='/exercises'
+								exact
+								element={
+									<>
+										<MyExercisesPage user={user} />
 									</>
 								}
 							/>

@@ -8,12 +8,7 @@ import { Typography, Stack, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import {
-	MobileDatePicker,
-	CalendarPicker,
-	DesktopDatePicker,
-	StaticDatePicker
-} from "@mui/lab";
+import { StaticDatePicker } from "@mui/lab";
 // import { BrowserView, MobileView } from "react-device-detect";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -24,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemButton from "@mui/material/ListItemButton";
 
 // Styles
-import * as Styles from "../components/Progress/ProgressPage.styles";
+// import * as Styles from "../components/Progress/ProgressPage.styles";
 
 // Hooks
 import { useWindowSize } from "../hooks/hooks";
@@ -67,7 +62,11 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 		>
 			<Paper
 				variant='outlined'
-				sx={{ height: "fit-content", paddingBottom: "20px" }}
+				sx={{
+					height: "fit-content",
+					paddingBottom: "20px",
+					width: "350px"
+				}}
 			>
 				{/* Calendar / Date Picker */}
 				<LocalizationProvider dateAdapter={AdapterDateFns}>

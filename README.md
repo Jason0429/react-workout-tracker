@@ -1,8 +1,15 @@
 # React Workout Tracker
 
+## Global
+
+-   [ ] export functions from App.js and import into lower components
+-   [ ] Add "react-workout-tracker" to prefix routes
+
 ## Progress Page
 
 -   [ ] See if you can modify calendar to show check or X mark
+-   [ ] Alert user to confirm deletion of workout in progress
+-   [ ] Add padding to bottom (for mobile view)
 
 ## Loading
 
@@ -19,13 +26,12 @@
 
 ## Database, ExerciseDialog
 
--   [ ] Put exercises list on database
--   [ ] Add custom exercises to exercises list
--   [ ] Have option to remove exercises
+-   [x] Put exercises list on database
+-   [x] Add custom exercises to exercises list
 
 ## Exercises Tab
 
--   [ ] Option to add and remove exercises
+-   [ ] Option to add and remove exercises (Dialog form)
     -   Name of exercises
     -   Categories
     -   Generate unique ID

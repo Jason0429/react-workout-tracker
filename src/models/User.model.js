@@ -1,3 +1,5 @@
+import { exercises } from "../data/exercises";
+
 export function User(profileObj) {
 	return {
 		email: profileObj.email,
@@ -7,6 +9,7 @@ export function User(profileObj) {
 		imageUrl: profileObj.imageUrl,
 		name: profileObj.name,
 		workouts: [],
-		templates: []
+		templates: [],
+		exercises
 	};
 }

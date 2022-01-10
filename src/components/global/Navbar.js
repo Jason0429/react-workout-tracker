@@ -10,8 +10,9 @@ import {
 	ListItemIcon,
 	IconButton
 } from "@mui/material";
-import { PersonAddAlt, Settings, LogoutOutlined } from "@mui/icons-material";
+import { LogoutOutlined } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
+import BoyIcon from "@mui/icons-material/Boy";
 import AddIcon from "@mui/icons-material/Add";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -20,7 +21,6 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Nav, Logo } from "./Navbar.styles";
 
 function Navbar({ user, handleLogout }) {
-	const { email, familyName, givenName, googleId, imageUrl, name } = user;
 	const [anchorEl, setAnchorEl] = useState(null);
 	const openMenu = Boolean(anchorEl);
 
@@ -34,16 +34,18 @@ function Navbar({ user, handleLogout }) {
 
 	return (
 		<Nav>
-			<Logo>{user ? user?.name : "Workout Tracker"}</Logo>
+			<Logo>{user ? user.name : "Workout Tracker"}</Logo>
 			<IconButton
 				onClick={handleOpen}
 				size='small'
 				sx={{ ml: 2 }}
 				className='mui-fixed'
 			>
-				<Avatar sx={{ width: 35, height: 35 }} src={imageUrl || null} />
+				<Avatar
+					sx={{ width: 35, height: 35 }}
+					src={user.imageUrl || null}
+				/>
 			</IconButton>
-
 			<Menu
 				anchorEl={anchorEl}
 				open={openMenu}
@@ -76,12 +78,12 @@ function Navbar({ user, handleLogout }) {
 					</ListItemIcon>
 					Log Workout
 				</MenuItem>
-				{/* <MenuItem>
+				<MenuItem component={NavLink} to='/exercises'>
 					<ListItemIcon>
-						<Settings fontSize='small' />
+						<BoyIcon fontSize='small' />
 					</ListItemIcon>
-					Settings
-				</MenuItem> */}
+					My Exercises
+				</MenuItem>
 				<MenuItem onClick={handleLogout}>
 					<ListItemIcon>
 						<LogoutOutlined fontSize='small' />
