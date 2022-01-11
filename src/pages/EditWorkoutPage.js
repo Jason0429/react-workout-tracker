@@ -26,7 +26,7 @@ function EditWorkoutPage({
 	handleAddWorkout,
 	handleUpdateWorkout,
 	handleOpenSnackbar,
-	handleAddCustomExercise
+	handleAddExercise
 }) {
 	// Id of template, if any
 	const { id } = useParams();
@@ -92,25 +92,21 @@ function EditWorkoutPage({
 	}
 
 	/**
+	 * Handles closing dialog.
+	 */
+	function handleCloseDialog() {
+		setOpenDialog(false);
+	}
+
+	/**
 	 * Handles adding an exercise to array of exercises in workout.
 	 * @param {Exercise} exercise
 	 */
-	function handleAddExercise(exercise) {
+	function handleAddExerciseToList(exercise) {
 		setWorkout((w) => ({
 			...w,
 			exercises: [...w["exercises"], exercise]
 		}));
-	}
-
-	/**
-	 * Handles closing dialog and adding exercise to workout.
-	 * @param {Exercise | ""} exercise the selected exercise.
-	 */
-	function handleCloseDialog(exercise) {
-		// If no exercise was selected.
-		if (!exercise) return setOpenDialog(false);
-		handleAddExercise(exercise);
-		setOpenDialog(false);
 	}
 
 	/**
@@ -195,8 +191,12 @@ function EditWorkoutPage({
 		}));
 	}
 
+	/**
+	 * Handles creating and adding workout to user's list of workouts.
+	 */
 	function handleSaveWorkout() {
-		if (workout.name.trim() === "") return;
+		if (workout.name.trim() === "")
+			return handleOpenSnackbar("Please enter a workout name");
 
 		// Decide whether to add workout or update existing workout
 		// by getting all current workouts with same id.
@@ -231,12 +231,11 @@ function EditWorkoutPage({
 					}}
 				>
 					<TextField
-						required
 						label='Workout Name'
-						variant='standard'
+						variant='outlined'
 						value={workout.name}
 						onChange={handleName}
-						style={{ width: "100%", minWidth: "250px" }}
+						fullWidth
 					/>
 					{/* Render all exercises here */}
 					<Stack direction='column' spacing={2} alignItems='center'>
@@ -263,11 +262,10 @@ function EditWorkoutPage({
 				</FullRowFixed>
 				<ExercisesDialog
 					exercises={user.exercises}
-					selectedValue={""}
 					open={openDialog}
 					handleCloseDialog={handleCloseDialog}
-					handleOpenSnackbar={handleOpenSnackbar}
-					handleAddCustomExercise={handleAddCustomExercise}
+					handleAddExercise={handleAddExercise}
+					handleAddExerciseToList={handleAddExerciseToList}
 				/>
 			</Stack>
 		</Container>

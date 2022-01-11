@@ -31,11 +31,10 @@ function TemplatePage({
 	user,
 	handleAddTemplate,
 	handleOpenSnackbar,
-	handleAddCustomExercise
+	handleAddExercise
 }) {
 	const [template, setTemplate] = useState(Template());
 	const [openDialog, setOpenDialog] = useState(false);
-	const isValid = Boolean(template.name);
 	const endOfExercisesRef = useRef();
 
 	// useEffect(() => {
@@ -58,32 +57,28 @@ function TemplatePage({
 	}
 
 	/**
-	 * Handles open dialog.
+	 * Handles opening dialog.
 	 */
 	function handleOpenDialog() {
 		setOpenDialog(true);
 	}
 
 	/**
-	 * Handles adding an exercise to array of exercises in template.
-	 * @param {Exercise} exercise
+	 * Handles closing dialog.
 	 */
-	function handleAddExercise(exercise) {
-		setTemplate((prev) => ({
-			...prev,
-			exercises: [...prev["exercises"], exercise]
-		}));
+	function handleCloseDialog() {
+		setOpenDialog(false);
 	}
 
 	/**
-	 * Handles closing dialog and adding exercise to template.
-	 * @param {Exercise | ""} exercise the selected exercise.
+	 * Handles adding an exercise to array of exercises in template.
+	 * @param {Exercise} exercise
 	 */
-	function handleCloseDialog(exercise) {
-		// If no exercise was selected.
-		if (!exercise) return setOpenDialog(false);
-		handleAddExercise(exercise);
-		setOpenDialog(false);
+	function handleAddExerciseToList(exercise) {
+		setTemplate((t) => ({
+			...t,
+			exercises: [...t["exercises"], exercise]
+		}));
 	}
 
 	/**
@@ -170,11 +165,19 @@ function TemplatePage({
 		}));
 	}
 
-	function handleCreateTemplate() {
+	/**
+	 * Handles creating and adding template to user's list of templates.
+	 */
+	function handleSaveTemplate() {
 		if (template.name.trim() === "")
 			return handleOpenSnackbar("Please enter a template name");
+
+		// Add template to user's list of templates.
 		handleAddTemplate({ ...template, name: template.name.trim() });
+
+		// Reset template.
 		setTemplate(Template());
+
 		handleOpenSnackbar(
 			`Successfully created template: ${template.name.trim()}`
 		);
@@ -195,13 +198,11 @@ function TemplatePage({
 					}}
 				>
 					<TextField
-						error={!isValid}
-						required
 						label='Workout Name'
-						variant='standard'
+						variant='outlined'
 						value={template.name}
 						onChange={handleName}
-						style={{ width: "100%", minWidth: "250px" }}
+						fullWidth
 					/>
 					{/* Render all exercises here */}
 					<Stack direction='column' spacing={2} alignItems='center'>
@@ -221,17 +222,16 @@ function TemplatePage({
 				</Stack>
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
-					<GreenBtn onClick={handleCreateTemplate}>
+					<GreenBtn onClick={handleSaveTemplate}>
 						Create Template
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
 					exercises={user.exercises}
-					selectedValue={""}
 					open={openDialog}
-					handleOpenSnackbar={handleOpenSnackbar}
 					handleCloseDialog={handleCloseDialog}
-					handleAddCustomExercise={handleAddCustomExercise}
+					handleAddExercise={handleAddExercise}
+					handleAddExerciseToList={handleAddExerciseToList}
 				/>
 			</Stack>
 		</Container>

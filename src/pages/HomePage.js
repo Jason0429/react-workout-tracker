@@ -29,13 +29,20 @@ function HomePage({ user }) {
 	`;
 
 	return (
-		<Container>
-			<Stack direction='column' spacing={3}>
-				<MyNavLink to='/template'>Create Template</MyNavLink>
-				<MyNavLink to='/progress'>View Progress</MyNavLink>
-				<MyNavLink to='/start'>Start Workout</MyNavLink>
-			</Stack>
-		</Container>
+		// <Container>
+		<Stack
+			direction='column'
+			spacing={3}
+			justifyContent='center'
+			alignItems='center'
+			height='100vh'
+		>
+			<MyNavLink to='/template'>Create Template</MyNavLink>
+			<MyNavLink to='/progress'>View Progress</MyNavLink>
+			<MyNavLink to='/exercises'>My Exercises</MyNavLink>
+			<MyNavLink to='/start'>Start Workout</MyNavLink>
+		</Stack>
+		// </Container>
 	);
 }
 

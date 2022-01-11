@@ -33,7 +33,7 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 
 	useEffect(() => {
 		setWorkoutsOnThisDay(getWorkoutsOnThisDay(dateSelected));
-	}, [dateSelected, user.workouts]);
+	}, [dateSelected]);
 
 	function getWorkoutsOnThisDay(dateSelected) {
 		return user.workouts.filter(
@@ -56,8 +56,9 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 			sx={{
 				width: "100%",
 				height: "100%",
-				padding: "10px",
-				marginTop: "150px"
+				// padding: "10px",
+				marginTop: "80px",
+				marginBottom: "100px"
 			}}
 		>
 			<Paper
@@ -105,7 +106,7 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 									aria-label='delete'
 									// To delete workout
 									onClick={() => {
-										handleDeleteWorkout(workout);
+										handleDeleteWorkout(workout.id);
 										handleOpenSnackbar(
 											`Successfully deleted workout: ${workout.name}`
 										);

@@ -13,45 +13,47 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-// Functions
-import * as AppFunctions from "../../App";
-
 // Models
 import { Exercise } from "../../models/Exercise.model";
 
 function ExercisesDialog({
 	exercises,
-	handleOpenSnackbar,
 	handleCloseDialog,
-	handleAddCustomExercise,
-	selectedValue,
-	open
+	open,
+	handleAddExercise,
+	handleAddExerciseToList
 }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [customExerciseName, setCustomExerciseName] = useState("");
 
 	/**
-	 * Handles closing the dialog and clearing search field.
+	 * Handles closing the dialog and clearing search fields.
 	 */
 	function handleClose() {
-		// alert(selectedValue);
-		handleCloseDialog(selectedValue);
 		setSearchTerm("");
 		setCustomExerciseName("");
+		handleCloseDialog();
 	}
 
 	/**
-	 * Handles  exercise from dialog.
+	 * Handles exercise from dialog.
 	 * @param {Exercise} value the selected exercise.
 	 */
-	function handleAddExercise(exercise) {
+	function handleExercise(exercise) {
+		// If name is empty, do nothing
 		if (exercise.name.trim() === "") return;
-		if (!exercises.some((e) => e.name === exercise.name)) {
-			handleAddCustomExercise(exercise);
+
+		// If exercise did not exist before (custom)
+		// Add exercise to user's list of exercise
+		if (!exercises.some((e) => e.name === exercise.name.trim())) {
+			handleAddExercise(exercise);
 		}
-		handleCloseDialog(exercise);
-		setSearchTerm("");
-		setCustomExerciseName("");
+
+		// Add exercise to template
+		handleAddExerciseToList(exercise);
+
+		// Close dialog and clear fields.
+		handleClose();
 	}
 
 	/**
@@ -72,6 +74,7 @@ function ExercisesDialog({
 
 	return (
 		<Dialog
+			// If you press outside of dialog
 			onClose={handleClose}
 			open={open}
 			fullWidth={true}
@@ -105,7 +108,7 @@ function ExercisesDialog({
 					}}
 					onKeyPress={(e) =>
 						e.key === "Enter"
-							? handleAddExercise(
+							? handleExercise(
 									Exercise(customExerciseName.trim(), [
 										"Custom"
 									])
@@ -121,7 +124,7 @@ function ExercisesDialog({
 						cursor: "pointer"
 					}}
 					onClick={() =>
-						handleAddExercise(
+						handleExercise(
 							Exercise(customExerciseName.trim(), ["Custom"])
 						)
 					}
@@ -150,7 +153,7 @@ function ExercisesDialog({
 					.map((exercise, idx) => (
 						<ListItem
 							button
-							onClick={() => handleAddExercise(exercise)}
+							onClick={() => handleExercise(exercise)}
 							key={idx}
 						>
 							<ListItemText primary={exercise.name} />

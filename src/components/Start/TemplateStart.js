@@ -1,5 +1,5 @@
 // React
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 // Styles
@@ -20,7 +20,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
+function TemplateStart({ template, handleDeleteTemplate }) {
 	const maxNumberOfDisplayableExercises = 4;
 	const [anchorEl, setAnchorEl] = useState(null);
 	const openMenu = Boolean(anchorEl);
@@ -59,7 +59,7 @@ function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
 			}}
 		>
 			<NavLink
-				to={`/start/${template?.id}`}
+				to={`/start/${template.id}`}
 				style={{ textDecoration: "none", color: "initial", zIndex: 1 }}
 			>
 				<Stack
@@ -130,7 +130,7 @@ function TemplateStart({ template, templateIdx, handleDeleteTemplate }) {
 					</ListItemIcon>
 					<Typography>Edit</Typography>
 				</MenuItem>
-				<MenuItem onClick={() => handleDeleteTemplate(templateIdx)}>
+				<MenuItem onClick={() => handleDeleteTemplate(template.id)}>
 					<ListItemIcon>
 						<DeleteForeverIcon
 							fontSize='small'

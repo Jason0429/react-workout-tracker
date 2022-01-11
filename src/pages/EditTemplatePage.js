@@ -29,7 +29,7 @@ function EditTemplatePage({
 	user,
 	handleUpdateTemplate,
 	handleOpenSnackbar,
-	handleAddCustomExercise
+	handleAddExercise
 }) {
 	const { id } = useParams();
 	const [template, setTemplate] = useState(
@@ -61,32 +61,28 @@ function EditTemplatePage({
 	}
 
 	/**
-	 * Handles open dialog.
+	 * Handles opening dialog.
 	 */
 	function handleOpenDialog() {
 		setOpenDialog(true);
 	}
 
 	/**
-	 * Handles adding an exercise to array of exercises in template.
-	 * @param {Exercise} exercise
+	 * Handles closing dialog.
 	 */
-	function handleAddExercise(exercise) {
-		setTemplate((prev) => ({
-			...prev,
-			exercises: [...prev["exercises"], exercise]
-		}));
+	function handleCloseDialog() {
+		setOpenDialog(false);
 	}
 
 	/**
-	 * Handles closing dialog and adding exercise to template.
-	 * @param {Exercise | ""} exercise the selected exercise.
+	 * Handles adding an exercise to array of exercises in template.
+	 * @param {Exercise} exercise
 	 */
-	function handleCloseDialog(exercise) {
-		// If no exercise was selected.
-		if (!exercise) return setOpenDialog(false);
-		handleAddExercise(exercise);
-		setOpenDialog(false);
+	function handleAddExerciseToList(exercise) {
+		setTemplate((t) => ({
+			...t,
+			exercises: [...t["exercises"], exercise]
+		}));
 	}
 
 	/**
@@ -173,12 +169,20 @@ function EditTemplatePage({
 		}));
 	}
 
-	function handleUpdateTemplateBtn() {
-		if (template.name.trim() === "") return;
+	/**
+	 * Handles saving the edits made to a template.
+	 */
+	function handleSaveTemplate() {
+		if (template.name.trim() === "")
+			return handleOpenSnackbar("Please enter a template name");
+
+		// Updates templates in user's list of templates.
 		handleUpdateTemplate({ ...template, name: template.name.trim() });
+
 		handleOpenSnackbar(
 			`Successfully updated template: ${template.name.trim()}`
 		);
+
 		// User directed to start page afterwards.
 	}
 
@@ -197,12 +201,11 @@ function EditTemplatePage({
 					}}
 				>
 					<TextField
-						required
 						label='Workout Name'
-						variant='standard'
+						variant='outlined'
 						value={template.name}
 						onChange={handleName}
-						style={{ width: "100%", minWidth: "250px" }}
+						fullWidth
 					/>
 					{/* Render all exercises here */}
 					<Stack direction='column' spacing={2} alignItems='center'>
@@ -223,17 +226,16 @@ function EditTemplatePage({
 				<FullRowFixed>
 					<BlueBtn onClick={handleOpenDialog}>+ Add Exercise</BlueBtn>
 					<RedBtn to='/start'>Cancel</RedBtn>
-					<GreenBtn onClick={handleUpdateTemplateBtn} to='/start'>
+					<GreenBtn onClick={handleSaveTemplate} to='/start'>
 						Update Template
 					</GreenBtn>
 				</FullRowFixed>
 				<ExercisesDialog
 					exercises={user.exercises}
-					selectedValue={""}
 					open={openDialog}
 					handleCloseDialog={handleCloseDialog}
-					handleOpenSnackbar={handleOpenSnackbar}
-					handleAddCustomExercise={handleAddCustomExercise}
+					handleAddExercise={handleAddExercise}
+					handleAddExerciseToList={handleAddExerciseToList}
 				/>
 			</Stack>
 		</Container>

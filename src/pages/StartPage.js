@@ -33,7 +33,6 @@ function StartPage({ user, handleDeleteTemplate }) {
 								<TemplateStart
 									template={template}
 									key={idx}
-									templateIdx={idx}
 									handleDeleteTemplate={handleDeleteTemplate}
 								/>
 							</Grid>
