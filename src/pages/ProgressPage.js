@@ -33,7 +33,7 @@ function ProgressPage({ user, handleDeleteWorkout, handleOpenSnackbar }) {
 
 	useEffect(() => {
 		setWorkoutsOnThisDay(getWorkoutsOnThisDay(dateSelected));
-	}, [dateSelected]);
+	}, [dateSelected, user.workouts]);
 
 	function getWorkoutsOnThisDay(dateSelected) {
 		return user.workouts.filter(

@@ -53,11 +53,11 @@ import {
 
 function App() {
 	const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-	const [loading, setLoading] = useState(true);
-	const [wasLoggedOut, setWasLoggedOut] = useLocalStorage(
-		"wasLoggedOut",
-		true
-	);
+	// const [loading, setLoading] = useState(true);
+	// const [wasLoggedOut, setWasLoggedOut] = useLocalStorage(
+	// 	"wasLoggedOut",
+	// 	true
+	// );
 	const [user, setUser] = useState(null);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -81,24 +81,24 @@ function App() {
 	 * If logged out, setLoading(false)
 	 * to reveal login screen
 	 */
-	useEffect(() => {
-		/**
-		 * If user was logged out, disable loading
-		 * to reveal login screen.
-		 * If user was not logged out, check if user has been
-		 * loaded in after 2 seconds.
-		 */
-		if (wasLoggedOut) {
-			setLoading(false);
-		} else {
-			setTimeout(() => {
-				if (!user) {
-					// setUser(null);
-					setLoading(false);
-				}
-			}, 2000);
-		}
-	}, []);
+	// useEffect(() => {
+	// 	/**
+	// 	 * If user was logged out, disable loading
+	// 	 * to reveal login screen.
+	// 	 * If user was not logged out, check if user has been
+	// 	 * loaded in after 2 seconds.
+	// 	 */
+	// 	if (wasLoggedOut) {
+	// 		setLoading(false);
+	// 	} else {
+	// 		setTimeout(() => {
+	// 			if (!user) {
+	// 				// setUser(null);
+	// 				setLoading(false);
+	// 			}
+	// 		}, 2000);
+	// 	}
+	// }, []);
 
 	/**
 	 * Gets the user object from firestore.
@@ -148,8 +148,8 @@ function App() {
 			setUser(userInDB);
 		}
 
-		setLoading(false);
-		setWasLoggedOut(false);
+		// setLoading(false);
+		// setWasLoggedOut(false);
 	}
 
 	/**
@@ -159,8 +159,8 @@ function App() {
 	function onLoginFailure(res) {
 		console.log("Failure: ", res);
 		setUser(null);
-		setLoading(false);
-		setWasLoggedOut(true);
+		// setLoading(false);
+		// setWasLoggedOut(true);
 	}
 
 	/**
@@ -169,7 +169,7 @@ function App() {
 	function onLogoutSuccess() {
 		console.log("Logout successful");
 		setUser(null);
-		setWasLoggedOut(true);
+		// setWasLoggedOut(true);
 	}
 
 	/**
@@ -179,7 +179,7 @@ function App() {
 	function onLogoutFailure(res) {
 		console.log("Logout failed: ", res);
 		setUser(null);
-		setWasLoggedOut(true);
+		// setWasLoggedOut(true);
 	}
 
 	const { signOut } = useGoogleLogout({
@@ -332,7 +332,7 @@ function App() {
 		setOpenSnackbar(false);
 	}
 
-	if (loading) return <LoadingPage />;
+	// if (loading) return <LoadingPage />;
 
 	return (
 		<Router>
