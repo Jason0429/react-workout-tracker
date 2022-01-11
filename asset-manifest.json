@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/react-workout-tracker/static/css/main.028af27d.chunk.css",
-    "main.js": "/react-workout-tracker/static/js/main.d56055c7.chunk.js",
-    "main.js.map": "/react-workout-tracker/static/js/main.d56055c7.chunk.js.map",
+    "main.js": "/react-workout-tracker/static/js/main.ebcb94ee.chunk.js",
+    "main.js.map": "/react-workout-tracker/static/js/main.ebcb94ee.chunk.js.map",
     "runtime-main.js": "/react-workout-tracker/static/js/runtime-main.bf01b543.js",
     "runtime-main.js.map": "/react-workout-tracker/static/js/runtime-main.bf01b543.js.map",
     "static/css/2.f10f449b.chunk.css": "/react-workout-tracker/static/css/2.f10f449b.chunk.css",
-    "static/js/2.39cd9bd1.chunk.js": "/react-workout-tracker/static/js/2.39cd9bd1.chunk.js",
-    "static/js/2.39cd9bd1.chunk.js.map": "/react-workout-tracker/static/js/2.39cd9bd1.chunk.js.map",
+    "static/js/2.97cad715.chunk.js": "/react-workout-tracker/static/js/2.97cad715.chunk.js",
+    "static/js/2.97cad715.chunk.js.map": "/react-workout-tracker/static/js/2.97cad715.chunk.js.map",
     "index.html": "/react-workout-tracker/index.html",
     "static/css/2.f10f449b.chunk.css.map": "/react-workout-tracker/static/css/2.f10f449b.chunk.css.map",
     "static/css/main.028af27d.chunk.css.map": "/react-workout-tracker/static/css/main.028af27d.chunk.css.map",
-    "static/js/2.39cd9bd1.chunk.js.LICENSE.txt": "/react-workout-tracker/static/js/2.39cd9bd1.chunk.js.LICENSE.txt",
+    "static/js/2.97cad715.chunk.js.LICENSE.txt": "/react-workout-tracker/static/js/2.97cad715.chunk.js.LICENSE.txt",
     "static/media/google-logo.0590aaf0.png": "/react-workout-tracker/static/media/google-logo.0590aaf0.png"
   },
   "entrypoints": [
     "static/js/runtime-main.bf01b543.js",
     "static/css/2.f10f449b.chunk.css",
-    "static/js/2.39cd9bd1.chunk.js",
+    "static/js/2.97cad715.chunk.js",
     "static/css/main.028af27d.chunk.css",
-    "static/js/main.d56055c7.chunk.js"
+    "static/js/main.ebcb94ee.chunk.js"
   ]
 }
