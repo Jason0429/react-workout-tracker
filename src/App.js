@@ -93,7 +93,7 @@ function App() {
 		} else {
 			setTimeout(() => {
 				if (!user) {
-					setUser(null);
+					// setUser(null);
 					setLoading(false);
 				}
 			}, 2000);
