@@ -3,7 +3,8 @@ import { useState } from "react";
 
 // Components
 import EditExerciseDialog from "../components/MyExercises/EditExerciseDialog";
-import DeleteExerciseConfirmationDialog from "../components/MyExercises/DeleteExerciseConfirmationDialog";
+import AddExerciseDialog from "../components/MyExercises/AddExerciseDialog";
+import ConfirmationDialog from "../components/global/ConfirmationDialog";
 
 // Styles
 import { BlueBtn } from "../components/MyExercises/MyExercisesPage.styles";
@@ -20,13 +21,11 @@ import {
 	Paper,
 	List,
 	ListItem,
-	ListItemText,
-	Button
+	ListItemText
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import EditIcon from "@mui/icons-material/Edit";
-import AddExerciseDialog from "../components/MyExercises/AddExerciseDialog";
 
 function MyExercisesPage({
 	user,
@@ -112,26 +111,36 @@ function MyExercisesPage({
 
 	return (
 		<>
-			{openAddExerciseDialog && (
-				<AddExerciseDialog
-					open={openAddExerciseDialog}
-					onClose={handleCloseAddExerciseDialog}
-					handleAddExercise={handleAddExercise}
-					handleOpenSnackbar={handleOpenSnackbar}
-				/>
-			)}
-
+			{/* {openAddExerciseDialog && ( */}
+			<AddExerciseDialog
+				open={openAddExerciseDialog}
+				onClose={handleCloseAddExerciseDialog}
+				handleAddExercise={handleAddExercise}
+				handleOpenSnackbar={handleOpenSnackbar}
+			/>
 			{/* Delete Exercise Confirmation Dialog */}
 			{selectedExerciseToDelete && (
-				<DeleteExerciseConfirmationDialog
+				<ConfirmationDialog
 					open={openConfirmationDialog}
 					onClose={handleCloseConfirmationDialog}
-					exercise={selectedExerciseToDelete}
-					handleDeleteExercise={handleDeleteExercise}
-					handleOpenSnackbar={handleOpenSnackbar}
+					title={"Delete Exercise?"}
+					message={
+						<>
+							Are you sure you want to delete{" "}
+							<span style={{ fontWeight: "bold" }}>
+								{selectedExerciseToDelete.name}
+							</span>
+						</>
+					}
+					yesFunction={() => {
+						handleDeleteExercise(selectedExerciseToDelete.id);
+						handleCloseConfirmationDialog();
+						handleOpenSnackbar(
+							`Successfully deleted exercise: ${selectedExerciseToDelete.name}`
+						);
+					}}
 				/>
 			)}
-
 			{/* Exercise Dialog */}
 			{selectedExerciseToEdit && (
 				<EditExerciseDialog
@@ -143,7 +152,6 @@ function MyExercisesPage({
 					handleOpenSnackbar={handleOpenSnackbar}
 				/>
 			)}
-
 			{/* List of Exercises */}
 			<Stack
 				direction='column'
@@ -269,7 +277,6 @@ function MyExercisesPage({
 					</Accordion>
 				</Paper>
 			</Stack>
-
 			{/* Bottom Fixed Row */}
 			<Paper
 				variant='outlined'
