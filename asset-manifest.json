@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-workout-tracker/static/css/main.028af27d.chunk.css",
-    "main.js": "/react-workout-tracker/static/js/main.a43a1b5b.chunk.js",
-    "main.js.map": "/react-workout-tracker/static/js/main.a43a1b5b.chunk.js.map",
+    "main.js": "/react-workout-tracker/static/js/main.d56055c7.chunk.js",
+    "main.js.map": "/react-workout-tracker/static/js/main.d56055c7.chunk.js.map",
     "runtime-main.js": "/react-workout-tracker/static/js/runtime-main.bf01b543.js",
     "runtime-main.js.map": "/react-workout-tracker/static/js/runtime-main.bf01b543.js.map",
     "static/css/2.f10f449b.chunk.css": "/react-workout-tracker/static/css/2.f10f449b.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.f10f449b.chunk.css",
     "static/js/2.39cd9bd1.chunk.js",
     "static/css/main.028af27d.chunk.css",
-    "static/js/main.a43a1b5b.chunk.js"
+    "static/js/main.d56055c7.chunk.js"
   ]
 }
